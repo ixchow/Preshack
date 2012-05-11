@@ -1,0 +1,1409 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800"
+   height="435"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docname="background.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background.png"
+   inkscape:export-xdpi="115.24138"
+   inkscape:export-ydpi="115.24138">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient5210">
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="0"
+         id="stop5212" />
+      <stop
+         id="stop5218"
+         offset="0.5"
+         style="stop-color:#707070;stop-opacity:1;" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop5214" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2563"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2681"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2748"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2815"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2882"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2949"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3016"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3083"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3150"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3217"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3284"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3351"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3418"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3485"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3552"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3619"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3686"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3753"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3820"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3887"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3954"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4021"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4088"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4155"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4222"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4323"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4390"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5227"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.9889686,0,0,0.9002176,2.368551,3.6535212)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5237"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.722258,0,0,0.9002176,23.340407,3.6535246)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5249"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.8959997,0,0,0.9769803,22.427298,-4.6944155)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5261"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0675423,0,0,0.9769803,19.504367,-5.9072395)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5273"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7722412,0,0,0.9002176,23.077717,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5285"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7266565,0,0,0.9002176,26.31888,17.660941)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5297"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.8466163,0,0,0.9002176,22.686834,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5309"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7260567,0,0,0.9769803,26.958919,5.2103316)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5321"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.6898689,0,0,0.9002176,23.510632,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5333"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7524479,0,0,0.9002176,23.181743,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5345"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.6490825,0,0,0.9002176,23.724985,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5357"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.8808049,0,0,0.9769803,22.507156,-4.6944155)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5369"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.638686,0,0,0.9769803,23.779625,-4.6944155)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5381"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.6044975,0,0,0.9002176,23.959305,3.6535222)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5393"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.9085956,0,0,0.9002176,22.361099,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5405"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.6846706,0,0,0.9002176,23.537955,3.6535251)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5417"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.8314214,0,0,0.9769803,22.766691,-4.6944155)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.5955004,0,0,0.9211529,24.00659,1.3768105)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5441"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.722258,0,0,0.9002176,23.340407,3.6535246)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5453"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7094623,0,0,0.9002176,23.407661,14.973227)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5465"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7206585,0,0,0.9002176,22.742401,12.749716)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5477"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.7774395,0,0,0.9769803,19.001401,-5.2995688)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5489"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1045299,0,0,0.9676757,-7.776455,-2.0654444)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5210"
+       id="linearGradient5501"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.6548806,0,0,0.9769803,-5.4132933,-3.0773119)"
+       x1="78.631508"
+       y1="108.75"
+       x2="78.631508"
+       y2="124.51673" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#5e5e5e"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2367816"
+     inkscape:cx="415.72774"
+     inkscape:cy="342.75937"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1148"
+     inkscape:window-height="748"
+     inkscape:window-x="40"
+     inkscape:window-y="107"
+     showborder="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <image
+       y="309.68613"
+       x="12.293686"
+       id="image2565"
+       height="45.310535"
+       width="236.72443"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_agarwala.png"
+       xlink:href="ref_agarwala.png" />
+    <g
+       id="g4400"
+       transform="matrix(0.302821,0,0,0.302821,178.5693,166.07657)">
+      <image
+         xlink:href="ref_agarwala_et_al.png"
+         sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_agarwala_et_al.png"
+         width="194"
+         height="255"
+         id="image2683"
+         x="303"
+         y="90" />
+      <image
+         xlink:href="ref_agarwala_et_al2.png"
+         sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_agarwala_et_al2.png"
+         width="193"
+         height="256"
+         id="image2750"
+         x="508.0632"
+         y="89.5" />
+    </g>
+    <image
+       y="320.90979"
+       x="523.35266"
+       id="image2817"
+       height="84.140373"
+       width="140.67221"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_agrawal.png"
+       xlink:href="ref_agrawal.png" />
+    <image
+       y="215.09459"
+       x="523.85687"
+       id="image2884"
+       height="90.045662"
+       width="160.0421"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_bhat.png"
+       xlink:href="ref_bhat.png" />
+    <image
+       y="5.278718"
+       x="5.207552"
+       id="image2951"
+       height="103.55054"
+       width="147.64044"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_burt_adelson.png"
+       xlink:href="ref_burt_adelson.png" />
+    <image
+       y="200.74356"
+       x="12.855781"
+       id="image3018"
+       height="90.971039"
+       width="136.45657"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_drori.png"
+       xlink:href="ref_drori.png" />
+    <g
+       id="g4406"
+       transform="matrix(0.8418005,0,0,0.8418005,412.16743,-342.07219)">
+      <image
+         xlink:href="ref_du1.png"
+         sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_du1.png"
+         width="87.130875"
+         height="78.417786"
+         id="image3085"
+         x="-21.059488"
+         y="541.19122" />
+      <image
+         xlink:href="ref_du2.png"
+         sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_du2.png"
+         width="87.130875"
+         height="78.417786"
+         id="image3152"
+         x="73.343086"
+         y="541.19122" />
+    </g>
+    <g
+       id="g4410"
+       transform="matrix(0.7373115,0,0,0.7373115,120.17821,-367.37964)">
+      <image
+         xlink:href="ref_elder_goldberg1.png"
+         sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_elder_goldberg1.png"
+         width="91.840691"
+         height="134.34981"
+         id="image3219"
+         x="202.53714"
+         y="505.42865" />
+      <image
+         xlink:href="ref_elder_goldberg2.png"
+         sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_elder_goldberg2.png"
+         width="91.315887"
+         height="134.34981"
+         id="image3286"
+         x="306.74365"
+         y="505.42865" />
+    </g>
+    <image
+       y="5.278718"
+       x="556.51068"
+       id="image3353"
+       height="96.448547"
+       width="108.88136"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_fattal.png"
+       xlink:href="ref_fattal.png" />
+    <image
+       y="210.65051"
+       x="697.37158"
+       id="image3420"
+       height="95.400513"
+       width="90.911064"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_feris.png"
+       xlink:href="ref_feris.png" />
+    <image
+       y="5.278718"
+       x="423.73203"
+       id="image3487"
+       height="98.174965"
+       width="122.71873"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_finlayson.png"
+       xlink:href="ref_finlayson.png" />
+    <image
+       y="115.37897"
+       x="269.77371"
+       id="image3554"
+       height="67.361252"
+       width="115.2626"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_georgiev.png"
+       xlink:href="ref_georgiev.png" />
+    <image
+       y="321.07324"
+       x="397.37845"
+       id="image3621"
+       height="84.144325"
+       width="117.34926"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_gooch.png"
+       xlink:href="ref_gooch.png" />
+    <image
+       y="115.11543"
+       x="194.69405"
+       id="image3688"
+       height="98.073273"
+       width="66.276085"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_jia.png"
+       xlink:href="ref_jia.png" />
+    <image
+       y="281.15057"
+       x="257.39447"
+       id="image3755"
+       height="58.858074"
+       width="134.87209"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_jia_tang.png"
+       xlink:href="ref_jia_tang.png" />
+    <image
+       y="359.25284"
+       x="239.6405"
+       id="image3822"
+       height="63.270298"
+       width="147.9196"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_kazhdan.png"
+       xlink:href="ref_kazhdan.png" />
+    <image
+       y="115.67012"
+       x="8.2201948"
+       id="image3889"
+       height="73.792686"
+       width="165.70988"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_levin.png"
+       xlink:href="ref_levin.png" />
+    <image
+       y="114.86361"
+       x="554.8833"
+       id="image3956"
+       height="84.930367"
+       width="118.9459"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_lischinski.png"
+       xlink:href="ref_lischinski.png" />
+    <image
+       y="5.278718"
+       x="166.36638"
+       id="image4023"
+       height="104.05993"
+       width="93.084854"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_perez.png"
+       xlink:href="ref_perez.png" />
+    <image
+       y="317.85547"
+       x="670.79578"
+       id="image4090"
+       height="90.691284"
+       width="120.80361"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_raskar.png"
+       xlink:href="ref_raskar.png" />
+    <image
+       y="195.65137"
+       x="401.02615"
+       id="image4157"
+       height="100.87664"
+       width="117.82077"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_sun.png"
+       xlink:href="ref_sun.png" />
+    <image
+       y="5.278718"
+       x="675.45197"
+       id="image4224"
+       height="92.823341"
+       width="117.84216"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_tumblin.png"
+       xlink:href="ref_tumblin.png" />
+    <image
+       y="108.03951"
+       x="682.96625"
+       id="image4325"
+       height="86.796684"
+       width="110.19111"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_wang.png"
+       xlink:href="ref_wang.png" />
+    <image
+       y="218.07935"
+       x="170.37775"
+       id="image4392"
+       height="81.250854"
+       width="81.250854"
+       sodipodi:absref="/home/Chicken1/preshack/dist/gp_siggraph/ref_wang2.png"
+       xlink:href="ref_wang2.png" />
+    <g
+       id="g5222"
+       transform="translate(-0.4042751,-2.0213755)">
+      <rect
+         y="101.55219"
+         x="7.5661516"
+         height="14.193487"
+         width="145.13298"
+         id="rect5208"
+         style="opacity:1;fill:url(#linearGradient5227);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4414"
+         y="113.28841"
+         x="6.5465646"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           y="113.28841"
+           x="6.5465646"
+           id="tspan4416"
+           sodipodi:role="line">[Burt and Adelson 1983]</tspan></text>
+    </g>
+    <g
+       transform="matrix(0,-1,1,0,58.402858,136.63008)"
+       id="g5229">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5237);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5231"
+         width="105.99271"
+         height="14.193487"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5233"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5519"
+           x="26.116707"
+           y="113.28841">[Pérez et al. 2003]</tspan></text>
+    </g>
+    <g
+       id="g5241"
+       transform="translate(392.36335,-5.2555873)">
+      <rect
+         y="101.55219"
+         x="27.136293"
+         height="15.403784"
+         width="131.48962"
+         id="rect5243"
+         style="opacity:1;fill:url(#linearGradient5249);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5245"
+         y="113.28841"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5251"
+           x="26.116707"
+           y="113.28841">[Finlayson et al. 2002]</tspan></text>
+    </g>
+    <g
+       transform="translate(236.50094,-4.4470371)"
+       id="g5253">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5261);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5255"
+         width="156.66382"
+         height="15.403784"
+         x="25.114918"
+         y="100.33936" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="24.095331"
+         y="112.07558"
+         id="text5257"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5505"
+           x="24.095331"
+           y="112.07558">[Elder and Goldberg 2001]</tspan></text>
+    </g>
+    <g
+       transform="translate(652.72493,302.15049)"
+       id="g5265">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5273);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5267"
+         width="113.32784"
+         height="14.193487"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5269"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5275"
+           x="26.116707"
+           y="113.28841">[Raskar et al. 2004]</tspan></text>
+    </g>
+    <g
+       id="g5277"
+       transform="translate(527.29313,-21.443416)">
+      <rect
+         y="115.55961"
+         x="30.137878"
+         height="14.193487"
+         width="106.6382"
+         id="rect5279"
+         style="opacity:1;fill:url(#linearGradient5285);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5281"
+         y="127.29582"
+         x="29.118296"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5287"
+           x="29.118296"
+           y="127.29582">[Fattal et al. 2002]</tspan></text>
+    </g>
+    <g
+       transform="translate(645.62733,-9.7026085)"
+       id="g5289">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5297);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5291"
+         width="124.24252"
+         height="14.193487"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5293"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5299"
+           x="26.116707"
+           y="113.28841">[Tumblin et al. 2005]</tspan></text>
+    </g>
+    <g
+       id="g5301"
+       transform="translate(654.83249,75.922448)">
+      <rect
+         y="111.45694"
+         x="30.774765"
+         height="15.403784"
+         width="106.55018"
+         id="rect5303"
+         style="opacity:1;fill:url(#linearGradient5309);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5305"
+         y="123.19315"
+         x="29.755182"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5311"
+           x="29.755182"
+           y="123.19315">[Wang et al. 2005]</tspan></text>
+    </g>
+    <g
+       transform="matrix(0,-1,1,0,588.08595,337.71284)"
+       id="g5313">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5321);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5315"
+         width="101.23954"
+         height="14.193487"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5317"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5323"
+           x="26.116707"
+           y="113.28841">[Feris et al. 2005]</tspan></text>
+    </g>
+    <g
+       id="g5325"
+       transform="translate(372.84442,296.3114)">
+      <rect
+         y="101.55219"
+         x="27.13629"
+         height="14.193487"
+         width="110.42313"
+         id="rect5327"
+         style="opacity:1;fill:url(#linearGradient5333);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5329"
+         y="113.28841"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5335"
+           x="26.116707"
+           y="113.28841">[Gooch et al. 2005]</tspan></text>
+    </g>
+    <g
+       transform="translate(385.58383,187.87444)"
+       id="g5337">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5345);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5339"
+         width="95.254066"
+         height="14.193487"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5341"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5347"
+           x="26.116707"
+           y="113.28841">[Sun et al. 2004]</tspan></text>
+    </g>
+    <g
+       id="g5349"
+       transform="translate(238.88696,161.95178)">
+      <rect
+         y="101.55219"
+         x="27.136293"
+         height="15.403784"
+         width="129.25975"
+         id="rect5351"
+         style="opacity:1;fill:url(#linearGradient5357);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5353"
+         y="113.28841"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5359"
+           x="26.116707"
+           y="113.28841">[Agarwala et al. 2004]</tspan></text>
+    </g>
+    <g
+       transform="translate(252.81066,72.283969)"
+       id="g5361">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5369);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5363"
+         width="93.728363"
+         height="15.403784"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5365"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5371"
+           x="26.116707"
+           y="113.28841">[Georgiev 2005]</tspan></text>
+    </g>
+    <g
+       id="g5373"
+       transform="translate(401.12709,71.050828)">
+      <rect
+         y="101.55219"
+         x="27.13629"
+         height="14.193487"
+         width="88.711128"
+         id="rect5375"
+         style="opacity:1;fill:url(#linearGradient5381);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5377"
+         y="113.28841"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5383"
+           x="26.116707"
+           y="113.28841">[Du et al. 2005]</tspan></text>
+    </g>
+    <g
+       transform="translate(513.89112,90.464448)"
+       id="g5385">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5393);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5387"
+         width="133.33809"
+         height="14.193487"
+         x="27.136293"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5389"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5395"
+           x="26.116707"
+           y="113.28841">[Lischinski et al. 2006]</tspan></text>
+    </g>
+    <g
+       id="g5397"
+       transform="translate(522.78097,196.33114)">
+      <rect
+         y="101.55219"
+         x="27.136293"
+         height="14.193487"
+         width="100.47668"
+         id="rect5399"
+         style="opacity:1;fill:url(#linearGradient5405);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5401"
+         y="113.28841"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5407"
+           x="26.116707"
+           y="113.28841">[Bhat et al. 2007]</tspan></text>
+    </g>
+    <g
+       transform="translate(507.6643,295.61026)"
+       id="g5409">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5417);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5411"
+         width="122.01264"
+         height="15.403784"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5413"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5419"
+           x="26.116707"
+           y="113.28841">[Agrawal et al. 2005]</tspan></text>
+    </g>
+    <g
+       id="g5421"
+       transform="matrix(0,-1,1,0,82.690529,233.5437)">
+      <rect
+         y="101.55219"
+         x="27.13629"
+         height="14.523568"
+         width="87.3908"
+         id="rect5423"
+         style="opacity:1;fill:url(#linearGradient5429);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5425"
+         y="113.28841"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5431"
+           x="26.116707"
+           y="113.28841">[Jia et al. 2006]</tspan></text>
+    </g>
+    <g
+       transform="matrix(0,-1,1,0,58.344054,331.31236)"
+       id="g5433">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5441);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5435"
+         width="105.99271"
+         height="14.193487"
+         x="27.13629"
+         y="101.55219" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="26.116707"
+         y="113.28841"
+         id="text5437"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5443"
+           x="26.116707"
+           y="113.28841">[Wang et al. 2004]</tspan></text>
+    </g>
+    <g
+       id="g5445"
+       transform="translate(3.6682472,171.72559)">
+      <rect
+         y="112.87189"
+         x="27.136293"
+         height="14.193487"
+         width="104.11491"
+         id="rect5447"
+         style="opacity:1;fill:url(#linearGradient5453);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5449"
+         y="124.60811"
+         x="26.116707"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5455"
+           x="26.116707"
+           y="124.60811">[Drori et al. 2004]</tspan></text>
+    </g>
+    <g
+       transform="translate(13.838541,71.457733)"
+       id="g5457">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5465);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5459"
+         width="105.75798"
+         height="14.193487"
+         x="26.529877"
+         y="110.64838" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="25.510294"
+         y="122.3846"
+         id="text5461"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5467"
+           x="25.510294"
+           y="122.3846">[Levin et al. 2003]</tspan></text>
+    </g>
+    <g
+       id="g5469"
+       transform="translate(241.52037,231.83595)">
+      <rect
+         y="100.94704"
+         x="23.087294"
+         height="15.403784"
+         width="114.0907"
+         id="rect5471"
+         style="opacity:1;fill:url(#linearGradient5477);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5473"
+         y="112.68325"
+         x="22.067711"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5479"
+           x="22.067711"
+           y="112.68325">[Jia and Tang 2005]</tspan></text>
+    </g>
+    <g
+       transform="translate(233.4966,309.07222)"
+       id="g5481">
+      <rect
+         style="opacity:1;fill:url(#linearGradient5489);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5483"
+         width="162.09181"
+         height="15.257081"
+         x="-1.971513"
+         y="103.1693" />
+      <text
+         xml:space="preserve"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="-2.9910998"
+         y="114.90551"
+         id="text5485"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5491"
+           x="-2.9910998"
+           y="114.90551">[Kazhdan and Hoppe 2008]</tspan></text>
+    </g>
+    <g
+       id="g5493"
+       transform="translate(83.498628,245.37524)">
+      <rect
+         y="103.1693"
+         x="-1.9715168"
+         height="15.403784"
+         width="96.104942"
+         id="rect5495"
+         style="opacity:1;fill:url(#linearGradient5501);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text5497"
+         y="114.90551"
+         x="-2.9910998"
+         style="font-size:15.02235699px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           sodipodi:role="line"
+           id="tspan5503"
+           x="-2.9910998"
+           y="114.90551">[Agarwala 2007]</tspan></text>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="categories"
+     style="display:inline">
+    <g
+       id="g5566"
+       inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background_blending.png"
+       inkscape:export-xdpi="115.24138"
+       inkscape:export-ydpi="115.24138">
+      <path
+         sodipodi:nodetypes="ccccccccccc"
+         id="path5507"
+         d="M 2.6218377,-30.044523 L 6.8607758,364.10532 L 222.97521,365.24878 L 222.97521,429.28269 L 397.925,431.56961 L 395.63807,188.01207 L 265.28333,188.01207 L 264.13987,2.7711226 L 133.78513,3.342854 L 134.10032,-32.756039 L 2.6218377,-30.044523 z"
+         style="fill:#c4760d;fill-opacity:0.34545486;fill-rule:evenodd;stroke:#f7990b;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5528"
+         y="-4.5160484"
+         x="16.397398"
+         style="font-size:28.6913414px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#f7990b;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           y="-4.5160484"
+           x="16.397398"
+           id="tspan5530"
+           sodipodi:role="line">Blending</tspan></text>
+    </g>
+    <g
+       id="g5556"
+       inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background_editing.png"
+       inkscape:export-xdpi="115.24138"
+       inkscape:export-ydpi="115.24138">
+      <path
+         sodipodi:nodetypes="ccccccccccccccccc"
+         id="path5509"
+         d="M 156.85874,3.2342007 L 157.66729,111.57993 L 182.73234,114.81413 L 181.92379,213.45725 L 266.82156,216.69145 L 267.63011,184.34944 L 393.5618,190.21143 L 398.21097,303.61059 L 523.94052,309.67472 L 527.78113,192.43494 L 390.12546,187.58364 L 389.72119,109.96283 L 419.63755,109.15428 L 417.2119,-29.916357 L 288.04601,-28.299256 L 287.43959,1.6171003 L 156.85874,3.2342007 z"
+         style="fill:#4ac40d;fill-opacity:0.21363639;fill-rule:evenodd;stroke:#09f400;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-size:28.6913414px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#09f400;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="305.04984"
+         y="-2.0903978"
+         id="text5532"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5534"
+           x="305.04984"
+           y="-2.0903978">Editing</tspan></text>
+    </g>
+    <g
+       id="g5561"
+       inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background_shadows.png"
+       inkscape:export-xdpi="115.24138"
+       inkscape:export-ydpi="115.24138">
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path5511"
+         d="M 418.829,-23.447955 L 419.63755,112.38848 L 391.33829,112.38848 L 392.95539,189.20074 L 550.62268,188.39219 L 549.00558,-25.065056 L 418.829,-23.447955 z"
+         style="fill:#c40d99;fill-opacity:0.21363639;fill-rule:evenodd;stroke:#f709ff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5536"
+         y="2.7609031"
+         x="431.99222"
+         style="font-size:28.6913414px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#f709ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           y="2.7609031"
+           x="431.99222"
+           id="tspan5538"
+           sodipodi:role="line">Shadows</tspan></text>
+    </g>
+    <g
+       id="g5581"
+       inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background_HDR.png"
+       inkscape:export-xdpi="115.24138"
+       inkscape:export-ydpi="115.24138">
+      <path
+         sodipodi:nodetypes="ccccc"
+         id="path5513"
+         d="M 671.09665,-20.213755 L 550.62268,-20.213755 L 551.43123,208.60595 L 680.79926,206.98885 L 671.09665,-20.213755 z"
+         style="fill:#b4c40d;fill-opacity:0.21363637999999999;fill-rule:evenodd;stroke:#f2f400;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-size:28.69134139999999888px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#f2f400;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="585.61676"
+         y="1.9523532"
+         id="text5544"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5546"
+           x="585.61676"
+           y="1.9523532">HDR</tspan></text>
+    </g>
+    <g
+       id="g5576"
+       inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background_capture.png"
+       inkscape:export-xdpi="115.24138"
+       inkscape:export-ydpi="115.24138">
+      <path
+         sodipodi:nodetypes="ccccccc"
+         id="path5515"
+         d="M 799.65613,-24.256506 L 671.9052,-27.490706 L 668.671,109.15428 L 680.79926,111.57993 L 687.26766,312.90892 L 797.23048,310.48327 L 799.65613,-24.256506 z"
+         style="fill:#0db0c4;fill-opacity:0.21363639;fill-rule:evenodd;stroke:#09f6c9;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5548"
+         y="-3.7074978"
+         x="689.91974"
+         style="font-size:28.6913414px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#09f6c9;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         xml:space="preserve"><tspan
+           y="-3.7074978"
+           x="689.91974"
+           id="tspan5550"
+           sodipodi:role="line">Capture</tspan></text>
+    </g>
+    <g
+       id="g5571"
+       inkscape:export-filename="/home/Chicken1/preshack/dist/gp_siggraph/background_enhancement.png"
+       inkscape:export-xdpi="115.24138"
+       inkscape:export-ydpi="115.24138">
+      <path
+         sodipodi:nodetypes="ccccccccccc"
+         id="path5517"
+         d="M 797.23048,313.71747 L 687.26766,312.90892 L 685.65056,211.0316 L 519.08922,211.84015 L 520.70632,316.95168 L 392.95539,314.52603 L 398.61524,443.89406 L 571.44285,444.29832 L 569.62361,417.2119 L 796.42193,421.25465 L 797.23048,313.71747 z"
+         style="fill:#c40d0d;fill-opacity:0.21363639;fill-rule:evenodd;stroke:#ff0404;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-size:28.6913414px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ff0404;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Gentium;-inkscape-font-specification:Gentium"
+         x="402.07587"
+         y="436.95236"
+         id="text5552"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5554"
+           x="402.07587"
+           y="436.95236">Enhancement</tspan></text>
+    </g>
+  </g>
+</svg>

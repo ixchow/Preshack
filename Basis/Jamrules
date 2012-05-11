@@ -1,0 +1,369 @@
+if $(IS_GAME) = 1 {
+	if $(OS) = MACOSX {
+		SDKVER = MacOSX10.5.sdk ;
+		CC = gcc -isysroot /Developer/SDKs/$(SDKVER) -arch i386 ;
+		C++ = g++ -isysroot /Developer/SDKs/$(SDKVER) -arch i386 ;
+		LINK = g++ -isysroot /Developer/SDKs/$(SDKVER) -arch i386 ;
+	
+	} else if $(OS) = NT {
+	} else {
+		CC = gcc -m32 -mfpmath=sse -msse -msse2 ;
+		C++ = g++ -m32 -mfpmath=sse -msse -msse2 ;
+		LINK = g++ -m32  -mfpmath=sse -msse -msse2 ;
+	}
+} else {
+	if $(OS) = MACOSX {
+		CC = gcc-mp-4.6 ;
+		C++ = g++-mp-4.6 ;
+		LINK = g++-mp-4.6 ;
+	} else if $(OS) = NT {
+	} else {
+		CC = gcc ;
+		C++ = g++ ;
+		LINK = g++ ;
+	}
+}
+
+if $(BASIS_USE_NAMESPACE) {
+	CC += -DBASIS_USE_NAMESPACE ;
+	C++ += -DBASIS_USE_NAMESPACE ;
+}
+
+if $(PROFILE) {
+	CC += -pg ;
+	C++ += -pg ;
+	LINK += -pg ;
+}
+
+if $(OS) = NT {
+		C++FLAGS = /EHsc /W3 /WX /MD /D_USE_MATH_DEFINES /DWINDOWS /I$(TOP)/../util /GR /GS /wd4244 /wd4146 ;
+
+		CCFLAGS = $(C++FLAGS) ;
+
+		SDLDIR = $(TOP)/../util/win_libs/sdl ;
+		PNGDIR = $(TOP)/../util/win_libs/libpng ;
+		ZLIBDIR = $(TOP)/../util/win_libs/zlib ;
+
+		LINKLIBS = kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib SDLmain.lib SDL.lib OpenGL32.lib GlU32.lib ;
+		if $(GRAPHICS_USE_TEXTURE) = 1 {
+			Echo Building with texture support ;
+			LINKLIBS += libpng.lib ;
+		}
+		if $(USE_ODE) = 1 {
+			Echo Building with ode support ;
+			LINKLIBS += ode_single.lib ;
+		}
+
+		LINKFLAGS = /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /MACHINE:X86 /INCREMENTAL:NO /NOLOGO /LIBPATH:"$(SDLDIR)" /LIBPATH:"$(PNGDIR)" /LIBPATH:"$(ZLIBDIR)" /NODEFAULTLIB:LIBC ;
+
+		SDLLINKLIBS = ;
+
+		SEP = \\ ;
+} else {
+
+	CCFLAGS += -I$(TOP) -Wall -Wextra -Wno-unused-parameter -Werror -g ;
+
+	C++FLAGS += -I$(TOP) -Wall -Wextra -Wno-unused-parameter -Werror -g ;
+
+	if $(OS) != MACOSX {
+		C++FLAGS += -std=c++0x ;
+	}
+
+	#SDLC++FLAGS = `sdl-config --cflags` ;
+
+	#SDLLINKLIBS = `sdl-config --libs` ;
+
+	MAGICKLDFLAGS = `Magick++-config --ldflags` ;
+
+	MAGICKLINKLIBS = `Magick++-config --libs` ;
+
+	if $(OS) = LINUX { #SDLLINKLIBS += -lGL -lGLU ;
+	Echo Building for Linux ;
+	C++FLAGS += -DLINUX ; }
+
+	if $(OS) = MACOSX { C++FLAGS += -DMACOSX ; SDLLINKLIBS += -framework OpenGL ; Echo Building for MacOS (MACOSX defined) ; }
+	
+	SEP = / ;
+}
+
+rule UseGraphics {
+	if $(OS) = NT {
+		SubInclude TOP .. util Graphics ;
+	} else {
+		SubInclude TOP Graphics ;
+	}
+}
+
+rule UseBasis {
+	if $(OS) = NT {
+		SubInclude TOP .. util Basis ;
+	} else {
+		SubInclude TOP Basis ;
+	}
+}
+
+rule MkDirBulk {
+	MkDir $(<) ;
+	DEPENDS $(>) : $(<) ;
+	Bulk $(<) : $(>) ;
+}
+
+rule MyObjects {
+	for FILE in $(1:S=$(SUFOBJ)) {
+		Depends $(FILE:D=$(SUBDIR)) : $(FILE:G=$(SOURCE_GRIST)) ;
+	}
+	Objects $(1) ;
+}
+
+
+actions Cpp64 {
+	g++ -Wall -Wextra -Wno-unused-parameter -Werror -c -I. -o -std=c++0x $(<) $(>) ;
+}
+
+rule MyObjects64 {
+	for SOURCE in $(1) {
+		FILE = $(SOURCE:S=.64$(SUFOBJ)) ;
+		#Depends $(FILE:D=$(SUBDIR)) : $(FILE:G=$(SOURCE_GRIST)) ;
+		#Depends $(FILE:G=$(SOURCE_GRIST)) : $(FILE:G=$(SOURCE_GRIST)) ;
+		Depends $(FILE:D=$(SUBDIR)) : $(SOURCE:G=$(SOURCE_GRIST)) ;
+		Cpp64 $(FILE:D=$(SUBDIR)) : $(SOURCE:G=$(SOURCE_GRIST)) ;
+		Clean clean : $(FILE:D=$(SUBDIR)) ;
+		#Cpp64 $(FILE) : $(SOURCE) ;
+	}
+}
+
+DISTDIR = dist_unknown ;
+
+if $(OS) = LINUX {
+	DISTDIR = dist_linux ;
+
+	rule GraphicsFlags {
+		if $(IS_GAME) = 1 {
+			ObjectC++Flags $(<) : "`/home/Chicken1/game_libs/SDL_nosound/bin/sdl-config --cflags`" ;
+			if $(GRAPHICS_USE_TEXTURE) != "" {
+				ObjectC++Flags $(<) : -I/home/Chicken1/game_libs/libpng/include ;
+			}
+		} else {
+			ObjectC++Flags $(<) : "`sdl-config --cflags`" ;
+		}
+
+	}
+
+	rule GraphicsC++Flags {
+		GraphicsFlags $(<) ;
+	}
+
+	rule GraphicsCFlags {
+		if $(IS_GAME) = 1 {
+			ObjectCcFlags $(<) : "`/home/Chicken1/game_libs/SDL_nosound/bin/sdl-config --cflags`" ;
+			if $(GRAPHICS_USE_TEXTURE) != "" {
+				ObjectC++Flags $(<) : -I/home/Chicken1/game_libs/libpng/include ;
+			}
+		} else {
+			ObjectCcFlags $(<) : "`sdl-config --cflags`" ;
+		}
+
+	}
+
+	rule GraphicsLibs {
+		if $(IS_GAME) = 1 {
+			LINKLIBS on $(DISTDIR)$(SEP)$(<) += "`/home/Chicken1/game_libs/SDL_nosound/bin/sdl-config --libs`" -lGL -lGLU $(GRAPHICS_LIBS) ;
+			if $(GRAPHICS_USE_TEXTURE) != "" {
+				LINKLIBS on $(DISTDIR)$(SEP)$(<) += -L/home/Chicken1/game_libs/libpng/lib -L/home/Chicken1/game_libs/libz/lib -lpng -lz ;
+			}
+		} else {
+			LINKLIBS on $(DISTDIR)$(SEP)$(<) += "`sdl-config --libs`" -lGL -lGLU $(GRAPHICS_LIBS) ;
+		}
+	}
+
+	rule Executable {
+		Echo Executable: $(<) ;
+		DEPENDS $(DISTDIR)$(SEP)$(<) : $(DISTDIR) ;
+		MainFromObjects $(DISTDIR)$(SEP)$(<) : $(>) ;
+	}
+
+}
+#------------------------------
+
+if $(OS) = NT {
+	DISTDIR = dist_windows ;
+
+	rule GraphicsFlags {
+		ObjectC++Flags $(<) : /I$(SDLDIR) ;
+	}
+
+	rule GraphicsC++Flags {
+		GraphicsFlags $(<) ;
+	}
+
+	rule GraphicsCFlags {
+		ObjectCcFlags $(<) : /I$(SDLDIR) ;
+	}
+
+	rule GraphicsLibs {
+	}
+
+	rule Executable {
+		Echo Executable: $(<) ;
+		DEPENDS $(DISTDIR)$(SEP)$(<) : $(DISTDIR) ;
+		MainFromObjects $(DISTDIR)$(SEP)$(<) : $(>) ;
+		if $(RCFILE) = "" {
+			Echo Defining RCFILE file will give your executable a nice icon. ;
+		} else {
+			Resource $(RCFILE:S=.res) : $(RCFILE) ;
+			LinkResource $(DISTDIR)$(SEP)$(<) : $(RCFILE:S=.res) ;
+		}
+	}
+
+}
+
+#-------------------------------
+if $(OS) = MACOSX {
+	DISTDIR = dist_osx ;
+
+	if $(IS_GAME) = 1 {
+		ObjectCcFlags SDLMain : -I/Library/Frameworks/SDL.framework/Headers ;
+		Cc SDLMain.o : Basis/osx/SDLMain.m ;
+	}
+
+	rule GraphicsFlags {
+		if $(IS_GAME) = 1 {
+			ObjectC++Flags $(<) : -I/Library/Frameworks/SDL.framework/Headers -I/System/Library/Frameworks/OpenGL.framework/Headers ;
+		} else {
+			ObjectC++Flags $(<) : "`sdl-config --cflags`" ;
+		}
+
+	}
+
+	rule GraphicsC++Flags {
+		GraphicsFlags $(<) ;
+	}
+
+	rule GraphicsCFlags {
+		if $(IS_GAME) = 1 {
+			ObjectCcFlags $(<) : -I/Library/Frameworks/SDL.framework/Headers -I/System/Library/Frameworks/OpenGL.framework/Headers ;
+		} else {
+			ObjectCcFlags $(<) : "`sdl-config --cflags`" ;
+		}
+
+	}
+
+	rule GraphicsLibs {
+		if $(IS_GAME) = 1 {
+			LINKLIBS on $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)MacOS$(SEP)$(<) += -framework SDL -framework OpenGL -L/usr/local/lib `libpng-config --ldflags` ;
+		} else {
+			LINKLIBS on $(DISTDIR)$(SEP)$(<) += "`sdl-config --libs`" -framework OpenGL $(GRAPHICS_LIBS) ;
+		}
+	}
+
+	actions DoCopySDL {
+		echo I\'m copying SDL.framework to $(>)
+		cp -r /Library/Frameworks/SDL.framework $(>)/SDL.framework
+	}
+	rule CopySDL {
+		DEPENDS all : $(<)/SDL.framework ;
+		DEPENDS $(<)/SDL.framework : $(<) ;
+		DoCopySDL $(<)/SDL.framework : $(<) ;
+	}
+
+	rule Executable {
+		Echo Executable: $(<) ;
+		if $(IS_GAME) = 1 {
+			MkDir $(DISTDIR)$(SEP)$(<).app ;
+			MkDir $(DISTDIR)$(SEP)$(<).app$(SEP)Contents ;
+			MkDir $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Resources ;
+			MkDir $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Frameworks ;
+			CopySDL $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Frameworks ;
+			MkDir $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)MacOS ;
+			FILE = $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)MacOS$(SEP)$(<) ;
+			DEPENDS $(FILE) : $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)MacOS ;
+			LINKLIBS on $(FILE) += -framework Cocoa ;
+			MainFromObjects $(FILE) : $(>) SDLMain.o ;
+			if $(INFOPLIST) = "" {
+				Echo You should really define INFOPLIST, or your .app isn't going to work. ;
+			} else {
+				DEPENDS $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Info.plist : $(DISTDIR)$(SEP)$(<).app$(SEP)Contents ;
+				File $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Info.plist : $(INFOPLIST) ;
+			}
+			if $(ICNS) = "" {
+				Echo You should really define ICNS, so I can copy over an OSX icon for you ;
+			} else {
+				DEPENDS $(ICNS) : $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Resources ;
+				Bulk $(DISTDIR)$(SEP)$(<).app$(SEP)Contents$(SEP)Resources : $(ICNS) ;
+			}
+		} else {
+			DEPENDS $(DISTDIR)$(SEP)$(<) : $(DISTDIR) ;
+			MainFromObjects $(DISTDIR)$(SEP)$(<) : $(>) ;
+		}
+	}
+
+}
+
+#----------------------
+#These are pretty OS-Neurtral:
+MkDir $(DISTDIR) ;
+
+
+
+rule Datafile {
+	Echo Datafile: $(<) ;
+	DEPENDS $(DISTDIR)$(SEP)$(<) : $(DISTDIR) ;
+	File $(DISTDIR)$(SEP)$(<) : $(>) ;
+}
+
+rule Datafiles {
+	Echo Datafiles: $(<) ;
+	DEPENDS $(DISTDIR)$(SEP)$(<) : $(DISTDIR) ;
+	MkDir $(DISTDIR)$(SEP)$(<) ;
+	DEPENDS $(>) : $(DISTDIR)$(SEP)$(<) ;
+	Bulk $(DISTDIR)$(SEP)$(<) : $(>) ;
+}
+
+rule SubDatafiles {
+	Echo SubDatafiles: $(1) -> $(2) ;
+	DEPENDS $(DISTDIR)$(SEP)$(2) : $(DISTDIR)$(SEP)$(1) ;
+	MkDir $(DISTDIR)$(SEP)$(2) ;
+	DEPENDS $(3) : $(DISTDIR)$(SEP)$(2) ;
+	Bulk $(DISTDIR)$(SEP)$(2) : $(3) ;
+}
+
+#Below is from http://maillist.perforce.com/pipermail/jamming/2000-October/001065.html
+
+# Resource : builds a resource file
+#
+rule Resource
+{
+     SEARCH on $(>) = $(SEARCH_SOURCE) ;
+     MakeLocate $(<) : $(LOCATE_TARGET) ;
+
+     DEPENDS $(<) : $(>) ;
+     Clean clean : $(<) ;
+
+     RCFLAGS on $(<) = $(RCFLAGS) /d$(RCDEFINES) ;
+}
+
+actions Resource
+{
+     RC $(RCFLAGS) /Fo$(<) $(>)
+}
+
+#
+# LinkResource : Links the resource file into an executable
+#
+rule LinkResource
+{
+     local t r ;
+
+     if $(<:S)
+     {
+         t = $(<) ;
+     } else {
+         t = $(<:S=$(SUFEXE)) ;
+     }
+
+     r = $(>:S=.res) ;
+
+     DEPENDS $(t) : $(r) ;
+     NEEDLIBS on $(t) += $(r) ;
+}
+

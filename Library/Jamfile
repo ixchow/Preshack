@@ -1,0 +1,17 @@
+TOP = .. ;
+
+SubDir TOP Library ;
+
+NAMES = Library Reader ReadSkeleton Skeleton ;
+
+if $(LIBRARY_USE_VFILE) {
+	NAMES += ReadSkeletonV Vfile WriteAsfAmc WriteBvh ; 
+	ObjectC++Flags ReadSkeleton : -DLIBRARY_USE_VFILE=1 ;
+	ObjectC++Flags ReadSkeletonV : -I/usr/include/libxml2 ;
+	LINKFLAGS += -L/usr/lib64 ;
+	LIBRARYLINKLIBS += -lxml2 ;
+}
+
+LIBRARY_OBJECTS = $(NAMES:D=$(SUBDIR):S=$(SUFOBJ)) ;
+
+MyObjects $(NAMES:S=.cpp) ;

@@ -1,0 +1,61 @@
+MySubDir TOP util Graphics ;
+
+local NAMES = Graphics GLExtensions Cache Font ;
+
+local CNAMES = texfont ;
+
+if $(GRAPHICS_USE_TEXTURE) || $(GRAPHICS_USE_FRAME_DUMPER) {
+	GRAPHICS_USE_PNG = 1 ;
+}
+
+rule GraphicsLibs $(1) {
+	if $(GRAPHICS_USE_JPEG) {
+		JPEGLibs $(1) ;
+	}
+	if $(GRAPHICS_USE_PNG) {
+		PNGLibs $(1) ;
+	}
+
+}
+
+if $(GRAPHICS_USE_JPEG) {
+	Echo "Building Graphics with JPEG loading support" ;
+	NAMES += load_jpeg ;
+	JPEGFlags load_jpeg ;
+	ObjectC++Flags Texture : -DGRAPHICS_USE_JPEG ;
+}
+
+if $(GRAPHICS_USE_PNG) {
+	Echo "Building Graphics with PNG loading support" ;
+	NAMES += load_save_png ;
+	PNGFlags load_save_png ;
+}
+
+if $(GRAPHICS_USE_TEXTURE) {
+	Echo "Building Graphics with cached texture support" ;
+	NAMES += Texture ;
+	PNGFlags Texture ;
+}
+
+if $(GRAPHICS_USE_FRAME_DUMPER) {
+	Echo "Building with frame dumper support" ;
+	NAMES += FrameDumper ;
+}
+
+if $(GRAPHICS_USE_SHADER) {
+	Echo "Building Graphics with cached shader support" ;
+	NAMES += GLSLShader ;
+}
+
+if $(GRAPHICS_USE_SHADOW) {
+	Echo "Building Graphics with shadow stencil helpers" ;
+	NAMES += ShadowStencil ;
+}
+
+GRAPHICS_OBJECTS = $(NAMES:D=$(LOCATE_TARGET):S=$(SUFOBJ)) $(CNAMES:D=$(LOCATE_TARGET):S=$(SUFOBJ)) ;
+
+UTIL_OBJECTS += $(GRAPHICS_OBJECTS) ;
+
+UtilFlags $(NAMES) $(CNAMES) ;
+
+MyObjects $(NAMES:S=.cpp) $(CNAMES:S=.c) ;

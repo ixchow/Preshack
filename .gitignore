@@ -1,0 +1,7 @@
+.*.swp
+*.o
+util
+dist/gentium.txf
+dist/hack
+dist/equations/*eqn
+dist/equations/*png

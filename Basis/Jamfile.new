@@ -1,0 +1,15 @@
+MySubDir TOP util Basis ;
+
+local NAMES = Screen Error ListDir ;
+
+if $(BASIS_USE_PACKED) {
+	NAMES += PackedIO ;
+}
+
+BASIS_OBJECTS = $(NAMES:D=$(LOCATE_TARGET):S=$(SUFOBJ)) ;
+
+UTIL_OBJECTS += $(BASIS_OBJECTS) ;
+
+UtilFlags $(NAMES) ;
+
+MyObjects $(NAMES:S=.cpp) ;
