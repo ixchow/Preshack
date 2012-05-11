@@ -1,0 +1,24 @@
+Preshack
+--------
+A quick hack for making presentations in a new and different way.
+
+Well, the 'quick' part maybe isn't true any more, as I've been using it for several years.
+
+Building
+--------
+Get ftjam.
+Run: jam -j4
+
+Running
+-------
+cd dist
+./hack README.hack
+
+
+I've bundled in various SIGGRAPH and Eurographics presentations to give you a flavor for what preshack can do.
+
+Who made this?
+--------------
+This was made by Jim McCann. Released into the public domain.
+
+Feel free to e-mail me (ix@tchow.com or jmccann@cs.cmu.edu) if you have comments or questions... or just if you actually use this for your own presentations. You could be the first!
