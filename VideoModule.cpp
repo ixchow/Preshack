@@ -19,11 +19,39 @@ namespace {
 	} fred;
 }
 
+VideoModule::VideoModule(std::string const &_path) : path(_path) {
+	if (path.size() > 4 && path.substr(path.size()-4) == "auto") {
+		paused = false;
+		path.erase(path.size()-4,4);
+	}
+
+	try {
+		stream.reset(new VidStream(path));
+		stream->advance();
+	} catch (std::runtime_error const &e) {
+		cerr << "WARNING: video module can't open '" << path << "':\n" << e.what() << endl;
+	}
+
+	target_time = 0.0;
+	tex = 0;
+	glGenTextures(1, &tex);
+	dirty = true;
+	/*
+	for (unsigned int i = 0; i < 10; ++i) {
+		if (!stream.advance_video()) break;
+		stream.discard_audio();
+	}*/
+}
+
+VideoModule::~VideoModule() {
+}
+
+
 Vector2f VideoModule::size() {
-	if (!stream.has_video()) {
-		return make_vector(1.0f, 1.0f);
+	if (stream && stream->width > 0) {
+		return make_vector(1.0f, float(stream->height) / stream->width);
 	} else {
-		return make_vector(1.0f, float(stream.h) / stream.w);
+		return make_vector(1.0f, 1.0f);
 	}
 }
 
@@ -35,7 +63,7 @@ void VideoModule::draw(Box2f viewport, Box2f screen_viewport, float scale, unsig
 
 	Vector2f s = size();
 
-	if (!stream.has_video()) {
+	if (!stream) {
 		glBegin(GL_QUADS);
 		glColor3f(0.0f, 0.0f, 0.0f);
 		glVertex2f(-0.5 * s.x, -0.5f * s.y);
@@ -52,25 +80,25 @@ void VideoModule::draw(Box2f viewport, Box2f screen_viewport, float scale, unsig
 		glEnd();
 	} else {
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, tex);
-		if (dirty) {
+		if (dirty && stream->rgb_data[0]) {
 			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGB, stream.w, stream.h, 0, GL_RGB, GL_UNSIGNED_BYTE, stream.get_video_pixels());
+			glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGB, stream->width, stream->height, 0, GL_RGB, GL_UNSIGNED_BYTE, stream->rgb_data[0]);
 			dirty = false;
 		}
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 1.0f);
-		glTexCoord2f(0, stream.h);
+		glTexCoord2f(0, stream->height);
 		glVertex2f(-0.5 * s.x, -0.5f * s.y);
 
 		glTexCoord2f(0, 0);
 		glVertex2f(-0.5 * s.x,  0.5f * s.y);
 
-		glTexCoord2f(stream.w, 0);
+		glTexCoord2f(stream->width, 0);
 		glVertex2f( 0.5 * s.x,  0.5f * s.y);
 
-		glTexCoord2f(stream.w, stream.h);
+		glTexCoord2f(stream->width, stream->height);
 		glVertex2f( 0.5 * s.x, -0.5f * s.y);
 		glEnd();
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
@@ -83,17 +111,20 @@ void VideoModule::draw(Box2f viewport, Box2f screen_viewport, float scale, unsig
 }
 
 void VideoModule::update(float elapsed_time) {
+	if (!stream) {
+		target_time = 0.0;
+		return;
+	}
 	if (!paused) {
 		target_time += elapsed_time;
 	}
 	unsigned int count = 0;
-	while (target_time >= stream.video_time()) {
-		if (!stream.advance_video()) break;
+	while (target_time > stream->timestamp) {
+		if (!stream->advance()) break;
 		dirty = true;
-		stream.discard_audio();
 		++count;
 		if (count > 10) {
-			target_time = stream.video_time();
+			target_time = stream->timestamp;
 			break;
 		}
 	}
@@ -102,14 +133,20 @@ void VideoModule::update(float elapsed_time) {
 bool VideoModule::handle_event(SDL_Event const &event, Vector2f local_mouse) {
 	if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
 		paused = !paused;
+		return true;
 	}
 	if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_RIGHT) {
 		paused = true;
-		if (!stream.open(path)) {
-			cerr << "WARNING: video module can't open '" << path << "'." << endl;
-		} else if (!stream.has_video()) {
-			cerr << "WARNING: stream '" << path << "' doesn't contain video." << endl;
+		target_time = 0.0;
+		stream.reset();
+		try {
+			stream.reset(new VidStream(path));
+			stream->advance();
+			dirty = true;
+		} catch (std::runtime_error const &e) {
+			cerr << "WARNING: video module can't open '" << path << "':\n" << e.what() << endl;
 		}
+		return true;
 	}
 	return false;
 }

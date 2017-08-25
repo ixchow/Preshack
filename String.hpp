@@ -14,8 +14,9 @@ public:
 	virtual ~String() {}
 	string text;
 	Vector3f color;
-	virtual Vector2f size();
-	virtual void draw(Box2f viewport, Box2f screen_viewport, float scale, unsigned int recurse = 0);
+	virtual Vector2f size() override;
+	virtual void draw(Box2f viewport, Box2f screen_viewport, float scale, unsigned int recurse = 0) override;
+	virtual bool get_pixel_size(Vector2ui &into) override;
 
 };
 

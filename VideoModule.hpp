@@ -1,35 +1,17 @@
-#ifndef VIDEOMODULE_HPP
-#define VIDEOMODULE_HPP
+#pragma once
+
 #include "VidStream.hpp"
 
 #include "Module.hpp"
 #include <Graphics/Graphics.hpp>
+#include <memory>
 
 
 class VideoModule : public Module {
 public:
-	VideoModule(std::string const &_path) : path(_path) {
-		paused = true;
-		if (path.size() > 4 && path.substr(path.size()-4) == "auto") {
-			paused = false;
-			path.erase(path.size()-4,4);
-		}
-		if (!stream.open(path)) {
-			cerr << "WARNING: video module can't open '" << path << "'." << endl;
-		} else if (!stream.has_video()) {
-			cerr << "WARNING: stream '" << path << "' doesn't contain video." << endl;
-		}
-		target_time = 0.0f;
-		tex = 0;
-		glGenTextures(1, &tex);
-		dirty = true;
-		for (unsigned int i = 0; i < 10; ++i) {
-			if (!stream.advance_video()) break;
-			stream.discard_audio();
-		}
-	}
-	virtual ~VideoModule() {
-	}
+	VideoModule(std::string const &_path);
+	virtual ~VideoModule();
+
 	//Item functions:
 	virtual Vector2f size();
 	virtual void draw(Box2f viewport, Box2f screen_viewport, float scale, unsigned int recurse = 0);
@@ -38,12 +20,9 @@ public:
 	virtual bool handle_event(SDL_Event const &event, Vector2f local_mouse);
 
 	string path;
-	VidStream stream;
-	double target_time;
-	bool paused;
-	bool dirty;
-	GLuint tex;
-
+	std::unique_ptr< VidStream > stream;
+	double target_time = 0.0;
+	bool paused = true;
+	bool dirty = true;
+	GLuint tex = 0;
 };
-
-#endif //VIDEOMODULE_HPP

@@ -811,8 +811,8 @@ void run_solve(SolverData *sd, Problem &prob, vector< size_t > const &starts, ve
 
 	const unsigned int Ofs = 5;
 	Vector2ui ofs[Ofs] = {
-		{{{ 0,-1}}},
-		{{{-1, 0}}},
+		{{{ 0,-1U}}},
+		{{{-1U, 0}}},
 		{{{ 0, 0}}},
 		{{{ 1, 0}}},
 		{{{ 0, 1}}},

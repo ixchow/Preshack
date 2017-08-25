@@ -1,0 +1,366 @@
+
+OBJ_DIR = objs ;
+
+#------------------------
+#Set up the basic paths:
+
+LOCATE_TARGET = $(OBJ_DIR) ;
+DISTDIR = dist ;
+
+if $(OS) = NT {
+	SEP = \\ ;
+} else {
+	SEP = / ;
+}
+
+HDRS = . util ;
+
+
+#------------------------
+#Rules that work with my subdir setup properly:
+
+rule MySubDir $(1) {
+	SubDir $(1) ;
+	if $(LOCATE_TARGET) = . {
+		LOCATE_TARGET = $(OBJ_DIR) ;
+	} else {
+		LOCATE_TARGET = $(OBJ_DIR)$(SEP)$(SUBDIR) ;
+	}
+}
+
+rule MyObjects {
+	for FILE in $(1:S=$(SUFOBJ)) {
+		Depends $(FILE:D=$(LOCATE_TARGET):S=$(SUFOBJ)) : $(FILE:G=$(SOURCE_GRIST)) ;
+	}
+	Objects $(1) ;
+}
+
+rule Executable $(1) : $(2) {
+	local LOCATE_TARGET = $(DISTDIR) ;
+	MainFromObjects $(1) : $(2) ;
+}
+
+#------------------------
+#Convenience rule for that delightful shotgun approach:
+rule ObjectFlags $(1) : $(2) {
+	ObjectC++Flags $(1) : $(2) ;
+	ObjectCcFlags $(1) : $(2) ;
+}
+
+#-------------
+#platform-specific rules:
+
+if $(OS) = NT {
+	if $(JAM_TOOLSET) = MINGW {
+		C++ = g++ --std=gnu++0x -g -Wall -Werror -mfpmath=sse -msse -msse2 ;
+		CC = gcc -g -Wall -Werror -mfpmath=sse -msse -msse2 ;
+		LINK = g++ -g -Wall -Werror ;
+		OPTIM = -O2 ;
+		Echo "*** Building with MinGW libs ***" ;
+
+		rule PNGFlags $(1) {
+		}
+		rule PNGLibs $(1) {
+		}
+		rule JPEGFlags $(1) {
+		}
+		rule JPEGLibs $(1) {
+		}
+		rule SDLFlags $(1) {
+			ObjectFlags $(1) : -I/MinGW/include/SDL ;
+		}
+		rule SDLLibs $(1) {
+			local f = $(1:S=$(SUFEXE)) ;
+			LINKLIBS on $(f) += -lmingw32 -lglu32 -lopengl32 -lpng -lz -lSDLmain -lSDL ;
+		}
+		rule VorbisFlags $(1) {
+		}
+		rule VorbisLibs $(1) {
+			local f = $(1:S=$(SUFEXE)) ;
+			LINKLIBS on $(f) += -lvorbisfile -lvorbis -logg ;
+		}
+
+
+		#Link rules that spit the command line into a file, as supplied by:
+		#from: http://www.differentpla.net/content/2004/01/linker-command-line-length
+		rule Link {
+			MODE on $(<) = $(EXEMODE) ;
+			LINKFLAGS on $(<) += $(LINKFLAGS) $(SUBDIRLINKFLAGS) ;
+			LINKLIBS on $(<) ?= "" ;
+			LINKLIBS on $(<) += $(LINKLIBS) ;
+
+			Chmod $(<) ;
+
+			local _i ;
+			StartLink $(<) : $(>) ;
+			for _i in $(>)
+			{
+				LinkItems $(<) : $(_i) ;
+			}
+			FinishLink $(<) : $(>) ;
+		}
+
+		rule StartLink {
+			Clean clean : $(<:S=.rsp) ;
+		}
+
+		actions quietly Link {
+		}
+
+		#file is touched first to prevent a 'Could Not Find ...rsp"
+		actions quietly StartLink {
+			echo xxx > $(<:S=.rsp)
+			del /f /q $(<:S=.rsp)
+		}
+
+		actions together piecemeal quietly LinkItems {
+			ECHO $(>) >> $(<:S=.rsp)
+		}
+
+		#the sed hack is ugly, but appears to work.
+		actions FinishLink bind NEEDLIBS {
+			sed -i -e"s/\\/\//g" $(<:S=.rsp)
+			$(LINK) $(LINKFLAGS) -o $(<) $(UNDEFS) @$(<:S=.rsp) $(NEEDLIBS) $(LINKLIBS)
+			del /f /q $(<:S=.rsp)
+		}
+
+
+	} else { #else, use visual studio...
+		#Everything is built as if $(IS_GAME)
+		C++FLAGS = /EHsc /O2 /W3 /WX /MD /D_USE_MATH_DEFINES /DWINDOWS
+			#/DVC_EXTRALEAN /DWIN32_LEAN_AND_MEAN
+			/GR
+			/arch:SSE2
+			/GS #buffer cookies
+			#/fp:strict
+			/GL #global optimizations
+			/wd4244 #various "loss of data" conversions, e.g. int->float
+			/wd4146 #-1U is still unsigned
+			/wd4800 #int -> bool coercion
+			/wd4305 #truncating double -> float
+			/wd4355 #'this' used in base member initializer list
+		;
+
+		CCFLAGS = $(C++FLAGS) ;
+
+		LINKLIBS = kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib OpenGL32.lib GlU32.lib ;
+
+		LINKFLAGS = /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /MACHINE:X86 /INCREMENTAL:NO /NOLOGO /NODEFAULTLIB:LIBC /NODEFAULTLIB:MSVCRTD ;
+		LINKFLAGS += /LTCG ;
+
+		#Link rules that spit the command line into a file, as supplied by:
+		#from: http://www.differentpla.net/content/2004/01/linker-command-line-length
+		rule Link {
+			MODE on $(<) = $(EXEMODE) ;
+			LINKFLAGS on $(<) += $(LINKFLAGS) $(SUBDIRLINKFLAGS) ;
+			LINKLIBS on $(<) ?= "" ;
+			LINKLIBS on $(<) += $(LINKLIBS) ;
+
+			Chmod $(<) ;
+
+			local _i ;
+			StartLink $(<) : $(>) ;
+			for _i in $(>)
+			{
+				LinkItems $(<) : $(_i) ;
+			}
+			FinishLink $(<) : $(>) ;
+		}
+
+		rule StartLink {
+			Clean clean : $(<:S=.rsp) ;
+		}
+
+		actions quietly Link {
+		}
+
+		#file is touched first to prevent a 'Could Not Find ...rsp"
+		actions quietly StartLink {
+			echo xxx > $(<:S=.rsp)
+			del /f /q $(<:S=.rsp)
+		}
+
+		actions together piecemeal quietly LinkItems {
+			ECHO $(>) >> $(<:S=.rsp)
+		}
+
+		actions FinishLink bind NEEDLIBS {
+			$(LINK) $(LINKFLAGS) /out:$(<) $(UNDEFS) @$(<:S=.rsp) $(NEEDLIBS) $(LINKLIBS) && del /f /q $(<:S=.rsp)
+		}
+
+
+		#Below is from http://maillist.perforce.com/pipermail/jamming/2000-October/001065.html
+
+		# Resource : builds a resource file
+		#
+		rule Resource
+		{
+		     SEARCH on $(>) = $(SEARCH_SOURCE) ;
+		     MakeLocate $(<) : $(LOCATE_TARGET) ;
+
+		     DEPENDS $(<) : $(>) ;
+		     Clean clean : $(<) ;
+
+		     RCFLAGS on $(<) = $(RCFLAGS) /d$(RCDEFINES) ;
+		}
+
+		actions Resource
+		{
+		     RC $(RCFLAGS) /Fo$(<) $(>)
+		}
+
+		#
+		# LinkResource : Links the resource file into an executable
+		#
+		rule LinkResource
+		{
+		     local t r ;
+
+		     if $(<:S)
+		     {
+		         t = $(<) ;
+		     } else {
+		         t = $(<:S=$(SUFEXE)) ;
+		     }
+
+	    	 r = $(>:S=.res) ;
+
+		     DEPENDS $(t) : $(r) ;
+		     NEEDLIBS on $(t) += $(r) ;
+		}
+
+		#end resource stuff
+		#------------
+		if $(GAME_LIBS) = "" {
+			Echo "GAME_LIBS isn't set, using default location." ;
+			GAME_LIBS = ../game-libs/out ;
+		}
+
+		rule PNGFlags {
+			ObjectFlags $(1) : /I"$(GAME_LIBS)/libpng" ;
+		}
+		rule PNGLibs {
+			local f = $(1:S=$(SUFEXE)) ;
+			LINKFLAGS on $(f) += /LIBPATH:"$(GAME_LIBS)/libpng" ;
+			LINKFLAGS on $(f) += /LIBPATH:"$(GAME_LIBS)/zlib" ;
+			LINKLIBS on $(f) += libpng.lib ;
+			LINKLIBS on $(f) += zlib.lib ;
+		}
+		rule JPEGFlags $(1) {
+		}
+		rule JPEGLibs $(1) {
+			Echo "JPEG not yet supported on Windows." ;
+		}
+		rule SDLFlags $(1) {
+			ObjectFlags $(1) : /D__WIN32__ /I"$(GAME_LIBS)/sdl" ;
+		}
+		rule SDLLibs {
+			local f = $(1:S=$(SUFEXE)) ;
+			LINKFLAGS on $(f) += /LIBPATH:"$(GAME_LIBS)/sdl" ;
+			LINKLIBS on $(f) += SDL2main.lib SDL2.lib ;
+		}
+		rule VorbisFlags $(1) {
+			ObjectFlags $(1) : /I"$(GAME_LIBS)/vorbis" ;
+		}
+		rule VorbisLibs $(1) {
+			local f = $(1:S=$(SUFEXE)) ;
+			LINKFLAGS on $(f) += /LIBPATH:"$(GAME_LIBS)/vorbis" ;
+			LINKLIBS on $(f) += libvorbisfile_static.lib libvorbis_static.lib libogg_static.lib ;
+		}
+	} #end if(mingw) else ...
+
+} else if $(OS) = MACOSX {
+	Echo "Building for OSX with system libs" ;
+	C++ = clang++ --std=c++11 -stdlib=libc++ -g -Wall -Werror -msse -msse2 $(EXTRA_FLAGS) ;
+	CC = clang -stdlib=libc++ -g -Wall -Werror $(EXTRA_FLAGS) -msse -msse2 ;
+	LINK = clang --std=c++11 -stdlib=libc++ -g -Wall -Werror -lc++ -msse -msse2 $(EXTRA_FLAGS) ;
+	OPTIM = -O2 ;
+	rule PNGFlags $(1) {
+		ObjectFlags $(1) : `libpng-config --cflags` ;
+	}
+	rule PNGLibs $(1) {
+		LINKLIBS on $(1) += `libpng-config --libs` ;
+	}
+	rule JPEGFlags $(1) {
+		ObjectC++Flags $(1) : -I/opt/local/include ;
+	}
+	rule JPEGLibs $(1) {
+		LINKLIBS on $(1) += -ljpeg ;
+	}
+	rule SDLFlags $(1) {
+		ObjectFlags $(1) : `sdl2-config --cflags` ;
+	}
+	rule SDLLibs $(1) {
+		LINKLIBS on $(1) += `sdl2-config --libs` -framework OpenGL ;
+	}
+	rule VorbisFlags $(1) {
+		#yay system headers.
+	}
+	rule VorbisLibs $(1) {
+		LINKLIBS on $(1) += -lvorbisfile ;
+	}
+} else if $(OS) = LINUX {
+	C++ = g++ $(EXTRA_FLAGS) --std=c++0x -g -Wall -Werror -mfpmath=sse -msse -msse2 ;
+	CC = gcc $(EXTRA_FLAGS) -g -Wall -Werror -mfpmath=sse -msse -msse2 ;
+	LINK = g++ $(EXTRA_FLAGS) -g -Wall -Werror -mfpmath=sse -msse -msse2 ;
+	OPTIM = -O2 ;
+	Echo "Building for Linux with system libs" ;
+	rule PNGFlags $(1) {
+		ObjectFlags $(1) : `libpng-config --cflags` ;
+	}
+	rule PNGLibs $(1) {
+		LINKLIBS on $(1) += `libpng-config --libs` ;
+	}
+	rule JPEGFlags $(1) {
+		ObjectC++Flags $(1) : -I/opt/local/include ;
+	}
+	rule JPEGLibs $(1) {
+		LINKLIBS on $(1) += -ljpeg ;
+	}
+	rule SDLFlags $(1) {
+		ObjectFlags $(1) : `sdl2-config --cflags` ;
+	}
+	rule SDLLibs $(1) {
+		LINKLIBS on $(1) += `sdl2-config --libs` -lGL -lGLU ;
+	}
+	rule VorbisFlags $(1) {
+		#yay system headers.
+	}
+	rule VorbisLibs $(1) {
+		LINKLIBS on $(1) += -lvorbisfile ;
+	}
+}
+
+#-------------
+#helpers for using "all of Util":
+
+rule SubIncludeUtil {
+	local JAMFILE = Jamfile.new ;
+	SubInclude TOP util Basis ;
+	SubInclude TOP util Graphics ;
+}
+
+rule UtilFlags $(1) {
+	SDLFlags $(1) ;
+	ObjectDefines $(1) : BASIS_USE_NAMESPACE ;
+	if $(OS) = NT {
+		if $(JAM_TOOLSET) = MINGW {
+			ObjectDefines $(1) : MINGW ;
+		} else {
+			ObjectDefines $(1) : WINDOWS ;
+		}
+	} else if $(OS) = MACOSX {
+		ObjectDefines $(1) : OSX ;
+	} else if $(OS) = LINUX {
+		ObjectDefines $(1) : LINUX ;
+	}
+}
+
+rule UtilLibs $(1) {
+	GraphicsLibs $(1) ;
+	SDLLibs $(1) ;
+}
+
+
+
+

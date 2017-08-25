@@ -10,14 +10,14 @@
 
 using std::swap;
 
-#ifndef MACOSX
+#ifndef OSX
 REQUIRE_GL_EXTENSION(GL_EXT_texture3);
 #else
 #define glTexImage3DEXT glTexImage3D
 #endif //MACOSX
 
 REQUIRE_GL_EXTENSION(GL_ARB_shader_objects);
-//REQUIRE_GL_EXTENSION(GL_ARB_multitexture);
+REQUIRE_GL_EXTENSION(GL_ARB_multitexture);
 
 namespace {
 	Module *create_module(const std::string &params_in) {
@@ -472,7 +472,7 @@ void LayerAnim::draw(Box2f viewport, Box2f screen_viewport, float scale, unsigne
 		glUseProgramObjectARB(sel_shader->handle);
 	}
 
-	glActiveTextureARB(GL_TEXTURE4);
+	glActiveTexture(GL_TEXTURE4);
 	static GLuint fade_tex = 0;
 	if (fade_tex == 0) {
 		glGenTextures(1, &fade_tex);
@@ -496,7 +496,7 @@ void LayerAnim::draw(Box2f viewport, Box2f screen_viewport, float scale, unsigne
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 	
-	glActiveTextureARB(GL_TEXTURE3);
+	glActiveTexture(GL_TEXTURE3);
 	static GLuint sel_tex = 0;
 	if (sel_tex == 0) {
 		glGenTextures(1, &sel_tex);
@@ -520,13 +520,13 @@ void LayerAnim::draw(Box2f viewport, Box2f screen_viewport, float scale, unsigne
 		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 
-	glActiveTextureARB(GL_TEXTURE2);
+	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, bars_tex);
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_3D, ball_tex);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	if (mode == EDGES) {
 		glBindTexture(GL_TEXTURE_3D, edges_tex);
 	} else if (mode == BALL) {
@@ -567,19 +567,19 @@ void LayerAnim::draw(Box2f viewport, Box2f screen_viewport, float scale, unsigne
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	glActiveTextureARB(GL_TEXTURE4);
+	glActiveTexture(GL_TEXTURE4);
 	glBindTexture(GL_TEXTURE_1D, 0);
 
-	glActiveTextureARB(GL_TEXTURE3);
+	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_1D, 0);
 
-	glActiveTextureARB(GL_TEXTURE2);
+	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_3D, 0);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_3D, 0);
 	glUseProgramObjectARB(0);
 

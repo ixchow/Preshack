@@ -32,6 +32,8 @@ REQUEST_GL_EXTENSION(GL_ARB_shader_objects);
 
 bool edit_mode = false;
 
+const float MessageLifetime = 3.0f;
+
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -621,6 +623,7 @@ bool PresHack::load(string const &filename) {
 }
 
 void PresHack::clear() {
+	loosen = 1.0f;
 	for (auto i = items.begin(); i != items.end(); ++i) {
 		//delete i->second; //DEBUG.
 		cerr << "Leaking memory! But it's probably ok..." << endl;
@@ -656,14 +659,17 @@ void PresHack::clear() {
 	source_port = 0;
 }
 
-void PresHack::copy(ostream &out) {
+void PresHack::copy(ostream &out, ScaleMode scale_mode) {
 	if (!current) return;
 	Box2f internal;
 	{
 		Box2f trash;
 		current->get_boxes(internal, trash);
 	}
-	float scale = 1.0f / internal.size().y;
+	float scale = 1.0f;
+	if (scale_mode == RelativeScale) {
+		scale = 1.0f / internal.size().y;
+	}
 	int at = 0;
 	map< Module *, int > have;
 	for (vector< Item * >::iterator i = current->items.begin(); i != current->items.end(); ++i) {
@@ -708,14 +714,17 @@ void PresHack::copy(ostream &out) {
 	}
 }
 
-void PresHack::paste(istream &in) {
+void PresHack::paste(istream &in, ScaleMode scale_mode) {
 	if (!current) return;
 	Box2f internal;
 	{
 		Box2f trash;
 		current->get_boxes(internal, trash);
 	}
-	float scale = internal.size().y;
+	float scale = 1.0f;
+	if (scale_mode == RelativeScale) {
+		scale = internal.size().y;
+	}
 
 	string line;
 	vector< Module * > have;
@@ -845,6 +854,17 @@ void PresHack::paste(istream &in) {
 	}
 	
 	void PresHack::handle_event(SDL_Event const &event) {
+		if (!edit_string) {
+			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
+				loosen *= 0.99f;
+				return;
+			}
+			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_w) {
+				loosen /= 0.99f;
+				if (loosen > 1.0f) loosen = 1.0f;
+				return;
+			}
+		}
 		if (event.type == SDL_MOUSEMOTION /*&& (tween == TWEEN_NONE)*/) {
 			mouse.x = (event.motion.x / float(Graphics::screen_x) * 2.0f - 1.0f) * Graphics::aspectf();
 			mouse.y = (event.motion.y / float(Graphics::screen_y) *-2.0f + 1.0f);
@@ -857,8 +877,8 @@ void PresHack::paste(istream &in) {
 			viewport.min = -0.5f * size;
 			viewport.max =  0.5f * size;
 			Box2f screen;
-			screen.min = make_vector(-Graphics::aspectf(), -1.0f);
-			screen.max = make_vector(Graphics::aspectf(),  1.0f);
+			screen.min = make_vector(-Graphics::aspectf(), -1.0f) * loosen;
+			screen.max = make_vector(Graphics::aspectf(),  1.0f) * loosen;
 			pos = current->get_mouse(viewport, screen, mouse);
 		}
 	
@@ -870,14 +890,16 @@ void PresHack::paste(istream &in) {
 			viewport.min = -0.5f * size;
 			viewport.max =  0.5f * size;
 			Box2f screen;
-			screen.min = make_vector(-Graphics::aspectf(), -1.0f);
-			screen.max = make_vector(Graphics::aspectf(),  1.0f);
+			screen.min = make_vector(-Graphics::aspectf(), -1.0f) * loosen;
+			screen.max = make_vector(Graphics::aspectf(),  1.0f) * loosen;
 			Vector2f local = current->get_mouse(viewport, screen, mouse);
 			local -= mod->position;
 			local /= mod->scale;
 			if (event.type == SDL_MOUSEBUTTONDOWN) {
 				assert(SDL_BUTTON(event.button.button) < 256);
-				assert(!(mouse_locked & SDL_BUTTON(event.button.button)));
+				if (mouse_locked & SDL_BUTTON(event.button.button)) {
+					LOG_WARNING("double-locking button.");
+				}
 				mouse_locked |= SDL_BUTTON(event.button.button);
 			}
 			if (event.type == SDL_MOUSEBUTTONUP) {
@@ -1145,11 +1167,14 @@ void PresHack::paste(istream &in) {
 					Vector2ui pix = make_vector(0U, 0U);
 					if (!item->get_pixel_size(pix)) {
 						stored_res = 0.0f;
+						message("Item doesn't support get/set resolution.");
 					} else {
 						if (event.key.keysym.mod & KMOD_SHIFT) {
 							stored_res = item->size().y * item->scale / pix.y;
+							message("Stored resolution " + std::to_string(stored_res));
 						} else if (stored_res > 0.0f) {
 							item->scale = (pix.y / item->size().y) * stored_res;
+							message("Set resolution " + std::to_string(stored_res));
 						}
 					}
 				}
@@ -1158,6 +1183,7 @@ void PresHack::paste(istream &in) {
 
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F1) {
 			save("dump.hack");
+			message("saved to 'dump.hack'");
 		}
 
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F2) {
@@ -1170,23 +1196,41 @@ void PresHack::paste(istream &in) {
 				} while (exists(name));
 			}
 			LOG_INFO("Saving screen to " << name << ".");
+			messages.clear();
 			draw();
 			vector< uint32_t > data(Graphics::screen_x * Graphics::screen_y, 0);
 			glReadPixels(0, 0, Graphics::screen_x, Graphics::screen_y, GL_RGBA, GL_UNSIGNED_BYTE, &data[0]);
 			save_png(name, Graphics::screen_x, Graphics::screen_y, &data[0]);
+			message("Saved screenshot to " + std::string(name) + ".");
 
 		}
 	
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F5) {
 			ofstream data("paste_data");
-			copy(data);
-			cout << "Copied." << endl;
+			copy(data, RelativeScale);
+			message("Copied (relative scale).");
+			cout << "Copied (relative scale)." << endl;
 		}
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F6) {
 			ifstream data("paste_data");
-			paste(data);
-			cout << "Pasted." << endl;
+			paste(data, RelativeScale);
+			message("Pasted (relative scale).");
+			cout << "Pasted (relative scale)." << endl;
 		}
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F7) {
+			ofstream data("paste_data");
+			copy(data, AbsoluteScale);
+			message("Copied (absolute scale).");
+			cout << "Copied (absolute scale)." << endl;
+		}
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_F8) {
+			ifstream data("paste_data");
+			paste(data, AbsoluteScale);
+			message("Pasted (absolute scale).");
+			cout << "Pasted (absolute scale)." << endl;
+		}
+
+
 		if (!edit_string) {
 			if (event.type == SDL_KEYDOWN && edit_mode && !edit_point && current && event.key.keysym.sym == SDLK_e) {
 				//expand frame area to cover screen.
@@ -1241,6 +1285,7 @@ void PresHack::paste(istream &in) {
 				f->screen_center = f->preview.center();
 				f->correct_camera();
 			}
+			message("Cameras reset.");
 		}
 		if (!edit_string) {
 			if (!snap_tweening) {
@@ -1420,12 +1465,20 @@ void PresHack::paste(istream &in) {
 					edit_string->insert(edit_string_cursor, in);
 					edit_string_cursor += in.size();
 				}
-			} else if (event.type == SDL_KEYDOWN && isprint(event.key.keysym.unicode)) {
+			}
+			/*
+			else if (event.type == SDL_KEYDOWN && isprint(event.key.keysym.unicode)) {
 				string in = "";
 				in = (char)event.key.keysym.unicode;
 				edit_string->insert(edit_string_cursor, in);
 				edit_string_cursor += in.size();
+			}*/
+			if (event.type == SDL_TEXTINPUT) {
+				std::string text = event.text.text;
+				edit_string->insert(edit_string_cursor, text);
+				edit_string_cursor += text.size();
 			}
+
 			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT) {
 				if (edit_string_cursor) --edit_string_cursor;
 			}
@@ -1435,6 +1488,7 @@ void PresHack::paste(istream &in) {
 		}
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN) {
 			if (edit_string) {
+				SDL_StopTextInput();
 				if (edit_string == &create_string) {
 					if (create_string.size()) {
 						Item *created = NULL;
@@ -1478,8 +1532,8 @@ void PresHack::paste(istream &in) {
 								viewport.min = -0.5f * size;
 								viewport.max =  0.5f * size;
 								Box2f screen;
-								screen.min = make_vector(-Graphics::aspectf(), -1.0f);
-								screen.max = make_vector(Graphics::aspectf(),  1.0f);
+								screen.min = make_vector(-Graphics::aspectf(), -1.0f) * loosen;
+								screen.max = make_vector(Graphics::aspectf(),  1.0f) * loosen;
 								created->position = current->get_mouse(viewport, screen, mouse);
 								current->items.push_back(created);
 								if (dynamic_cast< Module * >(created)) {
@@ -1492,12 +1546,14 @@ void PresHack::paste(istream &in) {
 								delete created;
 								created = NULL;
 								cout << "Whoops, nothing to put that in!" << endl;
+								message("Creation failed -- no frame.");
 							}
 							if (created) {
 								items.insert(make_pair(created->id, created));
 							}
 						} else {
 							cout << "Well, that creation string failed. Sorry." << endl;
+							message("Creation failed.");
 						}
 					}
 				}
@@ -1506,15 +1562,19 @@ void PresHack::paste(istream &in) {
 				create_string = "";
 				edit_string = &create_string;
 				edit_string_cursor = 0;
+				SDL_StartTextInput();
 			} else if (current && dynamic_cast< String * >(current->tween_target)) {
 				edit_string = &(dynamic_cast< String * >(current->tween_target)->text);
 				edit_string_cursor = edit_string->size();
+				SDL_StartTextInput();
 			} else if (current && dynamic_cast< Image * >(current->tween_target)) {
 				edit_string = &(dynamic_cast< Image * >(current->tween_target)->path);
 				edit_string_cursor = edit_string->size();
+				SDL_StartTextInput();
 			} else if (current && dynamic_cast< Equation * >(current->tween_target)) {
 				edit_string = &(dynamic_cast< Equation * >(current->tween_target)->equation);
 				edit_string_cursor = edit_string->size();
+				SDL_StartTextInput();
 			}
 		}
 	}
@@ -1541,6 +1601,15 @@ void PresHack::paste(istream &in) {
 	}
 	
 	void PresHack::update(float elapsed_time) {
+		{ //messages
+			for (auto &m : messages) {
+				m.age += elapsed_time;
+			}
+			while (!messages.empty() && messages.back().age > MessageLifetime) {
+				messages.pop_back();
+			}
+		}
+
 		if (!current) return;
 		if (snap_tweening) {
 			Snap const &next_snap = snaps[target_snap];
@@ -1721,8 +1790,8 @@ void PresHack::paste(istream &in) {
 			viewport.min = -0.5f * size;
 			viewport.max =  0.5f * size;
 			Box2f screen;
-			screen.min = make_vector(-Graphics::aspectf(), -1.0f);
-			screen.max = make_vector(Graphics::aspectf(),  1.0f);
+			screen.min = make_vector(-Graphics::aspectf(), -1.0f) * loosen;
+			screen.max = make_vector(Graphics::aspectf(),  1.0f) * loosen;
 			if (!edit_point && !edit_scale && !scrolling && !zooming && !snap_tweening) {
 				if (!mouse_locked) {
 					current->set_target(viewport, screen, mouse);
@@ -1762,8 +1831,8 @@ void PresHack::paste(istream &in) {
 		viewport.min = -0.5f * size;
 		viewport.max =  0.5f * size;
 		Box2f screen;
-		screen.min = make_vector(-Graphics::aspectf(), -1.0f);
-		screen.max = make_vector(Graphics::aspectf(),  1.0f);
+		screen.min = make_vector(-Graphics::aspectf(), -1.0f) * loosen;
+		screen.max = make_vector(Graphics::aspectf(),  1.0f) * loosen;
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 	
@@ -1805,8 +1874,8 @@ void PresHack::paste(istream &in) {
 					viewport.min = -0.5f * size;
 					viewport.max =  0.5f * size;
 					Box2f screen;
-					screen.min = make_vector(-Graphics::aspectf(), -1.0f);
-					screen.max = make_vector(Graphics::aspectf(),  1.0f);
+					screen.min = make_vector(-Graphics::aspectf(), -1.0f) * loosen;
+					screen.max = make_vector(Graphics::aspectf(),  1.0f) * loosen;
 					pos = current->get_mouse(viewport, screen, mouse);
 				}
 		
@@ -2194,6 +2263,22 @@ void PresHack::paste(istream &in) {
 		assert(scr == screen_temps.end());
 	}
 
+	if (edit_mode) { //messages
+		Graphics::FontRef gentium = Graphics::get_font("gentium.txf");
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		const float Height = 0.06f;
+		float y = 1.0f;
+		for (auto &m : messages) {
+			y -= Height + 0.01f;
+			float alpha = std::min((MessageLifetime - m.age) / 2.0f, 1.0f);
+			glColor(m.color, alpha);
+			gentium->draw(m.text,
+				make_vector(-Graphics::aspectf(), y),
+				Height);
+		}
+	}
+
 	finish_hq_frame();
 
 	Graphics::gl_errors("PresHack::draw");
@@ -2266,4 +2351,9 @@ void PresHack::get_close_seg(Vector2f const &pos, CloseSeg &close) {
 		}
 		check_segment(pos, &(*c), c->points.size(), from, to, close);
 	}
+}
+
+void PresHack::message(std::string const &text) {
+	messages.emplace_front();
+	messages.front().text = text;
 }

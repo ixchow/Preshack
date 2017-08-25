@@ -1,4 +1,5 @@
 #include "Mode.hpp"
+#include <Graphics/Graphics.hpp>
 
 Mode::Mode() :
 		min_ms_per_frame(1000/100),
@@ -41,7 +42,8 @@ void Mode::main_loop() {
 		draw();
 
 		//swap the drawn world to the front buffer
-		SDL_GL_SwapBuffers();
+		SDL_GL_SwapWindow(Graphics::window);
+		//SDL_GL_SwapBuffers();
 	}
 }
 

@@ -3,12 +3,7 @@ GRAPHICS_USE_TEXTURE = 1 ;
 GRAPHICS_USE_SHADER = 1 ;
 GRAPHICS_USE_JPEG = 1 ;
 SDL2 = 1 ;
-IS_GAME = 1 ;
 
-if $(OS) = MACOSX {
-} else {
-	GAME_LIBS = "../game-libs64/out" ;
-}
 
 SubDir TOP ;
 
@@ -52,17 +47,8 @@ NAMES = Frame hack Mode PresHack HQ String Item Image Equation Module DisplayMod
 #	GI_StepModule
 #	GI_Paint
 #	PoissonTiming
-#retroreflective holograms
-	RH_Bead
 #for unbaked talk:
 	PhysicsAnimation
-#for behavioral animation talk:
-	BA_Core BA_Stage BA_Timeline BA_UI
-	BA_RandomBehavior
-	ImageGraph
-#knitting
-	K_KnitSim K_KnitControl
-	svd/svd
 	;
 
 Objects $(NAMES:S=.cpp) ;

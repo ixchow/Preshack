@@ -25,3 +25,10 @@ void String::draw(Box2f viewport, Box2f screen_viewport, float scale, unsigned i
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 }
+bool String::get_pixel_size(Vector2ui &into) {
+	Vector2f s = size();
+	into.x = std::lround(30.0f * s.x);
+	into.y = std::lround(30.0f * s.y);
+	return true;
+}
+

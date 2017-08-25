@@ -14,6 +14,8 @@
 
 #include <vector>
 
+REQUIRE_GL_EXTENSION(GL_ARB_multitexture);
+
 #undef ERROR
 #define ERROR( X ) std::cerr << X << std::endl
 #define WARNING( X ) std::cout << X << std::endl
@@ -26,7 +28,6 @@ using std::endl;
 using std::swap;
 using std::ostringstream;
 using std::istringstream;
-
 
 #include "gp_load_ppm.hpp"
 
@@ -741,17 +742,9 @@ bool GeneralPaintModule::handle_event(SDL_Event const &event, Vector2f local_mou
 	
 
 	help.push_back("mouse wheel -- brush size");
-	if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_WHEELUP) {
-		brush_size -= 1;
+	if (event.type == SDL_MOUSEWHEEL) {
+		brush_size += event.wheel.y;
 		if (brush_size < 0.5f) brush_size = 0.5f;
-		if (current_stroke) {
-			current_stroke->dirty = true;
-		}
-		brush_fade = 1.0f;
-		return true;
-	}
-	if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_WHEELDOWN) {
-		brush_size += 1;
 		if (current_stroke) {
 			current_stroke->dirty = true;
 		}
@@ -1048,26 +1041,26 @@ void GeneralPaintModule::draw(Box2f viewport, Box2f screen_viewport, float, unsi
 	}
 
 	if (compare) {
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, f_orig_tex);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	}
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(0-0.5f*px_size,viewing.height-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,0+0.5f*px_size,viewing.height+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,0+0.5f*px_size,viewing.height+0.5f*px_size);
 	glVertex2i(0,0);
 
 	glTexCoord2f(viewing.width-0.5f*px_size,viewing.height-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,viewing.width+0.5f*px_size,viewing.height+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,viewing.width+0.5f*px_size,viewing.height+0.5f*px_size);
 	glVertex2i(draw_width,0);
 
 	glTexCoord2f(viewing.width-0.5f*px_size,0-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,viewing.width+0.5f*px_size,0+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,viewing.width+0.5f*px_size,0+0.5f*px_size);
 	glVertex2i(draw_width,draw_height);
 
 	glTexCoord2f(0-0.5f*px_size,0-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,0+0.5f*px_size,0+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,0+0.5f*px_size,0+0.5f*px_size);
 	glVertex2i(0,draw_height);
 
 	glEnd();
@@ -1077,12 +1070,12 @@ void GeneralPaintModule::draw(Box2f viewport, Box2f screen_viewport, float, unsi
 	glPopMatrix();
 
 	if (compare) {
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	}
 	
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -1599,7 +1592,7 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 			const float DMAX = 0.9f;
 
 			//set up all the textures for blend shader:
-			glActiveTextureARB(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0);
 			glEnable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, gx_src_tex);
 			if (dim == 1) {
@@ -1610,7 +1603,7 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 				#endif
 			} else set_nearest();
 			//
-			glActiveTextureARB(GL_TEXTURE1);
+			glActiveTexture(GL_TEXTURE1);
 			glEnable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, gy_src_tex);
 			if (dim == 0) {
@@ -1622,7 +1615,7 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 
 			} else set_nearest();
 			//
-			glActiveTextureARB(GL_TEXTURE2);
+			glActiveTexture(GL_TEXTURE2);
 			glEnable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, tan_tex);
 			if (clone_orient) {
@@ -1643,7 +1636,7 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 				glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			}
 			//
-			glActiveTextureARB(GL_TEXTURE3);
+			glActiveTexture(GL_TEXTURE3);
 			glEnable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, perp_tex);
 			if (clone_orient) {
@@ -1664,7 +1657,7 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 				glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			}
 			//
-			glActiveTextureARB(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0);
 
 			if (dim == 0) {
 				glUseProgramObjectARB(blend_modes[current_blend_mode].gx_shader->handle);
@@ -1701,27 +1694,27 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 
 				#define VERT(P,D) do { \
 					if (clone_orient) { \
-					glMultiTexCoord2fARB(GL_TEXTURE2, clone_offset.x + (P).x - 0.5f, clone_offset.y + (P).y); \
-					glMultiTexCoord2fARB(GL_TEXTURE3, clone_offset.x + (P).x, clone_offset.y + (P).y - 0.5f); \
+					glMultiTexCoord2f(GL_TEXTURE2, clone_offset.x + (P).x - 0.5f, clone_offset.y + (P).y); \
+					glMultiTexCoord2f(GL_TEXTURE3, clone_offset.x + (P).x, clone_offset.y + (P).y - 0.5f); \
 					} \
-					glMultiTexCoord2fARB(GL_TEXTURE0, (P).x - 0.5f, (P).y); \
-					glMultiTexCoord2fARB(GL_TEXTURE1, (P).x, (P).y - 0.5f); \
+					glMultiTexCoord2f(GL_TEXTURE0, (P).x - 0.5f, (P).y); \
+					glMultiTexCoord2f(GL_TEXTURE1, (P).x, (P).y - 0.5f); \
 					glVertex((P), (D)); \
 					} while(0)
 				//give texture position:
 				#define TEX(X,Y) do { \
 					if (!clone_orient) { \
-					glMultiTexCoord2fARB(GL_TEXTURE2, (X) - 0.5f, (Y)); \
-					glMultiTexCoord2fARB(GL_TEXTURE3, (X), (Y) - 0.5f); \
+					glMultiTexCoord2f(GL_TEXTURE2, (X) - 0.5f, (Y)); \
+					glMultiTexCoord2f(GL_TEXTURE3, (X), (Y) - 0.5f); \
 					} \
 					} while(0)
 
 				//twixt-segment blob:
 				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				if (clone_orient) {
-					glMultiTexCoord2fARB(GL_TEXTURE4, 1, 0);
+					glMultiTexCoord2f(GL_TEXTURE4, 1, 0);
 				} else {
-					glMultiTexCoord2fARB(GL_TEXTURE4, cur_perp.y,-cur_perp.x);
+					glMultiTexCoord2f(GL_TEXTURE4, cur_perp.y,-cur_perp.x);
 				}
 				//
 				TEX(along, tex_radius * 2.0f);
@@ -1742,9 +1735,9 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 				//segment:
 				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 				if (clone_orient) {
-					glMultiTexCoord2fARB(GL_TEXTURE4, 1, 0);
+					glMultiTexCoord2f(GL_TEXTURE4, 1, 0);
 				} else {
-					glMultiTexCoord2fARB(GL_TEXTURE4, next_perp.y,-next_perp.x);
+					glMultiTexCoord2f(GL_TEXTURE4, next_perp.y,-next_perp.x);
 				}
 				//
 				TEX(along, 2 * tex_radius);
@@ -1778,18 +1771,18 @@ void GeneralPaintModule::render_stroke(Stroke const &stroke, GLuint tan_tex, GLu
 			}
 			glEnd();
 
-			glActiveTextureARB(GL_TEXTURE3);
+			glActiveTexture(GL_TEXTURE3);
 			glDisable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 			//
-			glActiveTextureARB(GL_TEXTURE2);
+			glActiveTexture(GL_TEXTURE2);
 			glDisable(GL_TEXTURE_RECTANGLE_ARB);
 			//
-			glActiveTextureARB(GL_TEXTURE1);
+			glActiveTexture(GL_TEXTURE1);
 			glDisable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 			//
-			glActiveTextureARB(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0);
 			glDisable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -1846,7 +1839,7 @@ void GeneralPaintModule::grab_current_edge() {
 
 	bind_fb(edge_sample_fb, edge_steps, 2 * edge_rad);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, f_tex);
 	set_clamp_to_edge();
@@ -1874,7 +1867,7 @@ void GeneralPaintModule::grab_current_edge() {
 
 	glUseProgramObjectARB(0);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	set_nearest();
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
@@ -1920,7 +1913,7 @@ void GeneralPaintModule::grab_current_edge() {
 
 	//gradient -> acc_tex
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, edge_sample_tex);
 	set_clamp_to_edge(); set_nearest();
@@ -1931,19 +1924,19 @@ void GeneralPaintModule::grab_current_edge() {
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0f, 1.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, 0.0f, 0.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, 0.0f, 0.0f);
 	glVertex2f(0, 0);
 
 	glTexCoord2f(edge_steps, 1.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, edge_steps, 0.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, edge_steps, 0.0f);
 	glVertex2f(edge_steps, 0);
 
 	glTexCoord2f(edge_steps, edge_rad * 2.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, edge_steps, edge_rad * 2.0f - 1.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, edge_steps, edge_rad * 2.0f - 1.0f);
 	glVertex2f(edge_steps, edge_rad * 2.0f - 1.0f);
 
 	glTexCoord2f(0.0f, edge_rad * 2.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, 0.0f, edge_rad * 2.0f - 1.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, 0.0f, edge_rad * 2.0f - 1.0f);
 	glVertex2f(0.0f, edge_rad * 2.0f - 1.0f);
 	glEnd();
 
@@ -1953,19 +1946,19 @@ void GeneralPaintModule::grab_current_edge() {
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(1.0f, 0.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, 0.0f, 0.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, 0.0f, 0.0f);
 	glVertex2f(0, 0);
 
 	glTexCoord2f(edge_steps, 0.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, edge_steps-1, 0.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, edge_steps-1, 0.0f);
 	glVertex2f(edge_steps-1, 0);
 
 	glTexCoord2f(edge_steps, edge_rad*2.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, edge_steps-1, edge_rad*2.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, edge_steps-1, edge_rad*2.0f);
 	glVertex2f(edge_steps-1, edge_rad*2.0f);
 
 	glTexCoord2f(1.0f, edge_rad*2.0f);
-	glMultiTexCoord2fARB(GL_TEXTURE1, 0.0f, edge_rad*2.0f);
+	glMultiTexCoord2f(GL_TEXTURE1, 0.0f, edge_rad*2.0f);
 	glVertex2f(0.0f, edge_rad*2.0f);
 	glEnd();
 
@@ -1974,7 +1967,7 @@ void GeneralPaintModule::grab_current_edge() {
 
 	glUseProgramObjectARB(0);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 

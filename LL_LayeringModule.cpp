@@ -1356,10 +1356,22 @@ void LayeringModule::render_model() {
 	float s = 2.0f / length(model.bounds.size());
 	glTranslatef(0.0f, 0.0f, 0.5f);
 	glScalef(s * height / width, s, 1.0f / z_size);
-	glTranslatef(0.0f, 0.0f, z_center);
+	glTranslatef(0.0f, 0.0f,z_center);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt( camera.x, camera.y, camera.z, target.x, target.y, target.z, 0, 1, 0 );
+	{
+		Vector3f in = normalize(target - camera);
+		Vector3f up = normalize(make_vector(0.0f, 1.0f, 0.0f) - in.y * in);
+		Vector3f right = cross_product(in, up);
+		GLfloat mat[16] = {
+			right.x, up.x, -in.x, 0.0f,
+			right.y, up.y, -in.y, 0.0f,
+			right.z, up.z, -in.z, 0.0f,
+			-right * camera, -up * camera, in * camera, 1.0f,
+		};
+		glMultMatrixf(mat);
+	//gluLookAt( camera.x, camera.y, camera.z, target.x, target.y, target.z, 0, 1, 0 );
+	}
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	unsigned int layer = 0;

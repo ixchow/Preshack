@@ -16,7 +16,7 @@ REQUIRE_GL_EXTENSION( GL_ARB_texture_rectangle )
 REQUIRE_GL_EXTENSION( GL_ARB_texture_float )
 REQUEST_GL_EXTENSION( GL_ARB_color_buffer_float )
 REQUIRE_GL_EXTENSION( GL_ARB_shader_objects )
-//REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
+REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
 
 #include "gp_gl_helpers.hpp"
 
@@ -279,12 +279,12 @@ void smooth(Graphics::ProgramObjectRef &iter_shader, VLevel &lev, float magic_x)
 	glUniform1fARB(glGetUniformLocationARB(iter_shader->handle, "w_x"), magic_x);
 	glUniform1fARB(glGetUniformLocationARB(iter_shader->handle, "w_center_minus_x_inv"), 1.0f / (lev.middle-magic_x));
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, lev.rhs_tex);
 	set_nearest();
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, lev.f_tex);
 	set_clamp_to_edge(); set_nearest();
@@ -312,11 +312,11 @@ void smooth(Graphics::ProgramObjectRef &iter_shader, VLevel &lev, float magic_x)
 	glEnd();
 	*/
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -344,12 +344,12 @@ void coarsify(Graphics::ProgramObjectRef &residual_shader, Graphics::ProgramObje
 	glUniform1fARB(glGetUniformLocationARB(residual_shader->handle, "w_edge"), lev.edge);
 	glUniform1fARB(glGetUniformLocationARB(residual_shader->handle, "w_center"), lev.middle);
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, lev.rhs_tex);
 	set_nearest();
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, lev.f_tex);
 	set_clamp_to_edge(); set_nearest();
@@ -361,11 +361,11 @@ void coarsify(Graphics::ProgramObjectRef &residual_shader, Graphics::ProgramObje
 	glTexCoord2f(0,lev.height); glVertex2f(0,lev.height);
 	glEnd();
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -379,7 +379,7 @@ void coarsify(Graphics::ProgramObjectRef &residual_shader, Graphics::ProgramObje
 
 	glUseProgramObjectARB(restrict_shader->handle);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, first_level?lev.f_temp_tex:lev.rhs_tex);
 	//RESTRICT_PROJECT_CLAMP(); //whatever clamp that is
@@ -397,7 +397,7 @@ void coarsify(Graphics::ProgramObjectRef &residual_shader, Graphics::ProgramObje
 	glTexCoord2f(-0.5f,2*to.height-0.5f); glVertex2f(0.0f, to.height);
 	glEnd();
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -425,12 +425,12 @@ void interpolate(Graphics::ProgramObjectRef &interpolate_shader, Graphics::Progr
 		glUseProgramObjectARB(interpolate_shader->handle);
 	}
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, lev.f_tex);
 	set_nearest();
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, from.f_tex);
 	RESTRICT_PROJECT_CLAMP(); //whatever clamp that is
@@ -442,28 +442,28 @@ void interpolate(Graphics::ProgramObjectRef &interpolate_shader, Graphics::Progr
 
 
 	glBegin(GL_QUADS);
-	glMultiTexCoord2fARB(GL_TEXTURE1, 0.0f, 0.0f );
+	glMultiTexCoord2f(GL_TEXTURE1, 0.0f, 0.0f );
 	glTexCoord2f(0.25f, 0.25f);
 	glVertex2f(0.0f, 0.0f);
 
-	glMultiTexCoord2fARB(GL_TEXTURE1, lev.width, 0.0f );
+	glMultiTexCoord2f(GL_TEXTURE1, lev.width, 0.0f );
 	glTexCoord2f(0.25f+0.5f*lev.width, 0.25f);
 	glVertex2f(lev.width, 0.0f);
 
-	glMultiTexCoord2fARB(GL_TEXTURE1, lev.width, lev.height );
+	glMultiTexCoord2f(GL_TEXTURE1, lev.width, lev.height );
 	glTexCoord2f(0.25f+0.5f*lev.width, 0.25f+0.5f*lev.height);
 	glVertex2f(lev.width, lev.height);
 
-	glMultiTexCoord2fARB(GL_TEXTURE1, 0.0f, lev.height );
+	glMultiTexCoord2f(GL_TEXTURE1, 0.0f, lev.height );
 	glTexCoord2f(0.25f, 0.25f+0.5f*lev.height);
 	glVertex2f(0.0f, lev.height);
 	glEnd();
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -556,12 +556,12 @@ void VCycle::update(GeneralPaintModule *gp) {
 		glUniform3fARB(glGetUniformLocationARB(recenter_sub_shader->handle, "grey"), grey_point.x, grey_point.y, grey_point.z);
 
 
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, avg.back().tex);
 		set_nearest(); set_clamp_to_edge();
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, levels[0].f_tex);
 		set_nearest();
@@ -573,11 +573,11 @@ void VCycle::update(GeneralPaintModule *gp) {
 		glTexCoord2f(0, levels[0].height); glVertex2f(0, levels[0].height);
 		glEnd();
 
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 	
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -613,11 +613,11 @@ void VCycle::gradient_changed(GeneralPaintModule *gp) {
 	//calculate-ify various RHS:
 	
 	bind_fb(levels[0].rhs_fb, gp->ImageWidth, gp->ImageHeight);
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, gp->gx_tex);
 	set_clamp_to_black();
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, gp->gy_tex);
 	set_clamp_to_black();
@@ -633,10 +633,10 @@ void VCycle::gradient_changed(GeneralPaintModule *gp) {
 
 	glUseProgramObjectARB(0);
 
-	glActiveTextureARB(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE1);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
-	glActiveTextureARB(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_TEXTURE_RECTANGLE_ARB);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 

@@ -8,14 +8,13 @@
 #include <iostream>
 #include <vector>
 
-REQUEST_GL_EXTENSION(GL_EXT_framebuffer_object);
-REQUEST_GL_EXTENSION(GL_EXT_packed_depth_stencil);
+REQUEST_GL_EXTENSION(GL_ARB_framebuffer_object);
 REQUEST_GL_EXTENSION(GL_ARB_texture_non_power_of_two);
 REQUEST_GL_EXTENSION(GL_ARB_texture_float);
 REQUEST_GL_EXTENSION(GL_ARB_texture_rectangle);
-REQUEST_GL_EXTENSION(GL_EXT_framebuffer_multisample);
-REQUEST_GL_EXTENSION(GL_EXT_framebuffer_blit);
 REQUEST_GL_EXTENSION(GL_ARB_shader_objects);
+REQUIRE_GL_EXTENSION(GL_ARB_multitexture);
+
 
 using std::cout;
 using std::endl;
@@ -35,67 +34,67 @@ const Vector2ui HqStaticSize = make_vector(256U, 256U);
 GLuint hq_static_tex = 0;
 
 void init_hq(unsigned int samples) {
-	assert(have_EXT_framebuffer_object());
-	assert(have_EXT_packed_depth_stencil());
+	assert(have_ARB_framebuffer_object());
 	assert(have_ARB_texture_non_power_of_two());
 	assert(have_ARB_texture_float());
 	assert(have_ARB_texture_rectangle());
-	assert(have_EXT_framebuffer_multisample());
-	assert(have_EXT_framebuffer_blit());
+	assert(have_ARB_shader_objects());
 
 	//Renderbuffer for multisample color:
-	glGenRenderbuffersEXT(1, &hq_multisample_color);
-	glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, hq_multisample_color);
-	glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, samples, GL_RGB16F_ARB, Graphics::screen_x, Graphics::screen_y);
-	glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
+	glGenRenderbuffers(1, &hq_multisample_color);
+	glBindRenderbuffer(GL_RENDERBUFFER, hq_multisample_color);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_RGB16F_ARB, Graphics::screen_x, Graphics::screen_y);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	Graphics::gl_errors("hq multisample color setup");
 
 	//Renderbuffer for depth + stencil:
-	glGenRenderbuffersEXT(1, &hq_multisample_depth_stencil);
-	glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, hq_multisample_depth_stencil);
-	glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, samples, GL_DEPTH_STENCIL_EXT, Graphics::screen_x, Graphics::screen_y);
-	glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
+	glGenRenderbuffers(1, &hq_multisample_depth_stencil);
+	glBindRenderbuffer(GL_RENDERBUFFER, hq_multisample_depth_stencil);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH_STENCIL, Graphics::screen_x, Graphics::screen_y);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	Graphics::gl_errors("hq multisample depth stencil setup");
 
-	glGenFramebuffersEXT(1, &hq_multisample_framebuffer);
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, hq_multisample_framebuffer);
-	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_EXT, hq_multisample_color);
-	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, hq_multisample_depth_stencil);
-	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, hq_multisample_depth_stencil);
+	glGenFramebuffers(1, &hq_multisample_framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, hq_multisample_framebuffer);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, hq_multisample_color);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, hq_multisample_depth_stencil);
 
 	Graphics::gl_errors("hq multisample framebuffer setup");
 
 	{ //check:
-		GLenum ret = glCheckFramebufferStatusEXT( GL_FRAMEBUFFER_EXT );
-		if (ret != GL_FRAMEBUFFER_COMPLETE_EXT) {
-			cout << "ERROR: hq_multisample_framebuffer not complete!" << endl;
-			if (ret == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT) {
-				cout << "  incomplete attachment." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT) {
-				cout << "  missing attachment." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT) {
-				cout << "  dimensions." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT) {
-				cout << "  formats." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT) {
-				cout << "  draw buffer." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT) {
-				cout << "  read buffer." << endl;
-			} else if (ret == GL_FRAMEBUFFER_UNSUPPORTED_EXT) {
-				cout << "  unsupported." << endl;
-			} else {
-				cout << "  other: " << ret << endl;
-			}
-			exit(1);
+		GLenum status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+		switch(status) {
+			case GL_FRAMEBUFFER_COMPLETE:
+				break;
+			case GL_FRAMEBUFFER_UNSUPPORTED:
+				std::cerr << "hq multisample framebuffer: Unsupported fb format." << std::endl;
+				exit(1);
+				break;
+			//These are all "programmer error" type errors:
+			case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_ATTACHMENT");
+			case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT");
+			case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER");
+			case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_READ_BUFFER");
+			case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_MULTISAMPLE");
+			case GL_FRAMEBUFFER_UNDEFINED:
+				assert(0 && "FRAMEBUFFER_UNDEFINED");
+			default:
+				assert(0 && "unknown framebuffer error");
 		}
+
 	}
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glGenTextures(1, &hq_tex);
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, hq_tex);
-	glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA16F_ARB, Graphics::screen_x, Graphics::screen_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGB16F_ARB, Graphics::screen_x, Graphics::screen_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -104,37 +103,41 @@ void init_hq(unsigned int samples) {
 
 	Graphics::gl_errors("hq tex setup");
 
-	glGenFramebuffersEXT(1, &hq_framebuffer);
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, hq_framebuffer);
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_RECTANGLE_ARB, hq_tex, 0);
+
+	glGenFramebuffers(1, &hq_framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, hq_framebuffer);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_RECTANGLE_ARB, hq_tex, 0);
 
 	Graphics::gl_errors("hq framebuffer setup");
 
 	{ //check:
-		GLenum ret = glCheckFramebufferStatusEXT( GL_FRAMEBUFFER_EXT );
-		if (ret != GL_FRAMEBUFFER_COMPLETE_EXT) {
-			cout << "ERROR: hq_framebuffer not complete!" << endl;
-			if (ret == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT) {
-				cout << "  incomplete attachment." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT) {
-				cout << "  missing attachment." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT) {
-				cout << "  dimensions." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT) {
-				cout << "  formats." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT) {
-				cout << "  draw buffer." << endl;
-			} else if (ret == GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT) {
-				cout << "  read buffer." << endl;
-			} else if (ret == GL_FRAMEBUFFER_UNSUPPORTED_EXT) {
-				cout << "  unsupported." << endl;
-			} else {
-				cout << "  other: " << ret << endl;
-			}
-			exit(1);
+		GLenum status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+		switch(status) {
+			case GL_FRAMEBUFFER_COMPLETE:
+				break;
+			case GL_FRAMEBUFFER_UNSUPPORTED:
+				std::cerr << "hq framebuffer: Unsupported fb format." << std::endl;
+				exit(1);
+				break;
+			//These are all "programmer error" type errors:
+			case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_ATTACHMENT");
+			case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT");
+			case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER");
+			case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_READ_BUFFER");
+			case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+				assert(0 && "FRAMEBUFFER_INCOMPLETE_MULTISAMPLE");
+			case GL_FRAMEBUFFER_UNDEFINED:
+				assert(0 && "FRAMEBUFFER_UNDEFINED");
+			default:
+				assert(0 && "unknown framebuffer error");
 		}
+
 	}
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	//Texture for static:
 	glGenTextures(1, &hq_static_tex);
@@ -166,7 +169,7 @@ void start_hq_frame() {
 	if (hq_multisample_framebuffer == 0) {
 		return;
 	}
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, hq_multisample_framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, hq_multisample_framebuffer);
 	glEnable(GL_MULTISAMPLE);
 	//glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
 	Graphics::gl_errors("start_hq_frame");
@@ -180,7 +183,7 @@ void finish_hq_frame() {
 	assert(have_ARB_shader_objects());
 	{ //check that proper fb still bound.
 		GLint fb = 0;
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_EXT, &fb);
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fb);
 		if ((GLuint)fb != hq_multisample_framebuffer) {
 			cout << "ERROR: Framebuffer '" << hq_multisample_framebuffer << "' turned into '" << fb << "' during draw; disabling hq mode." << endl;
 			deinit_hq();
@@ -190,13 +193,20 @@ void finish_hq_frame() {
 
 	//copy blended version to hq_tex:
 
-	glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, hq_framebuffer);
-	glBlitFramebufferEXT(
+	glDisable(GL_BLEND);
+	Graphics::gl_errors("hq blit A");
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, hq_multisample_framebuffer);
+	Graphics::gl_errors("hq blit B");
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, hq_framebuffer);
+	Graphics::gl_errors("hq blit C");
+	glBlitFramebuffer(
 		0, 0, Graphics::screen_x, Graphics::screen_y,
 		0, 0, Graphics::screen_x, Graphics::screen_y,
 		GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	Graphics::gl_errors("hq blit frame");
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	{ //draw hq_tex:
 		glMatrixMode(GL_PROJECTION);
@@ -222,9 +232,9 @@ void finish_hq_frame() {
 		glUniform2fARB(glGetUniformLocationARB(static_shader->handle, "static_add"), rand() / float(RAND_MAX), rand() / float(RAND_MAX));
 		glUniform1fARB(glGetUniformLocationARB(static_shader->handle, "scale"), 1.0f / powf(2.0f, (int)hq_bits - 1));
 
-		glActiveTextureARB(GL_TEXTURE1_ARB);
+		glActiveTexture(GL_TEXTURE1_ARB);
 		glBindTexture(GL_TEXTURE_2D, hq_static_tex);
-		glActiveTextureARB(GL_TEXTURE0_ARB);
+		glActiveTexture(GL_TEXTURE0_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, hq_tex);
 
 		glBegin(GL_QUADS);
@@ -234,9 +244,9 @@ void finish_hq_frame() {
 		glTexCoord2f( Graphics::screen_x, Graphics::screen_y); glVertex2f( 1.0f,  1.0f);
 		glTexCoord2f( Graphics::screen_x, 0.0f); glVertex2f( 1.0f, -1.0f);
 		glEnd();
-		glActiveTextureARB(GL_TEXTURE1_ARB);
+		glActiveTexture(GL_TEXTURE1_ARB);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glActiveTextureARB(GL_TEXTURE0_ARB);
+		glActiveTexture(GL_TEXTURE0_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
 		glUseProgramObjectARB(0);
@@ -250,20 +260,20 @@ void deinit_hq() {
 	}
 
 	if (hq_multisample_framebuffer != 0) {
-		glDeleteFramebuffersEXT(1, &hq_multisample_framebuffer);
+		glDeleteFramebuffers(1, &hq_multisample_framebuffer);
 		hq_multisample_framebuffer = 0;
 	}
 	if (hq_multisample_color != 0) {
-		glDeleteRenderbuffersEXT(1, &hq_multisample_color);
+		glDeleteRenderbuffers(1, &hq_multisample_color);
 		hq_multisample_color = 0;
 	}
 	if (hq_multisample_depth_stencil != 0) {
-		glDeleteRenderbuffersEXT(1, &hq_multisample_depth_stencil);
+		glDeleteRenderbuffers(1, &hq_multisample_depth_stencil);
 		hq_multisample_depth_stencil = 0;
 	}
 
 	if (hq_framebuffer != 0) {
-		glDeleteFramebuffersEXT(1, &hq_framebuffer);
+		glDeleteFramebuffers(1, &hq_framebuffer);
 		hq_framebuffer = 0;
 	}
 	if (hq_tex != 0) {

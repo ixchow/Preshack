@@ -1,0 +1,22 @@
+GRAPHICS_USE_TEXTURE = 1 ;
+GRAPHICS_USE_SHADER = 1 ;
+#IS_GAME = 1 ; #build 32-bit & with custom libraries to make redist easier
+
+SubDir TOP ;
+
+SubIncludeUtil ;
+
+MySubDir TOP ;
+
+NAMES =
+	main #main program
+;
+
+
+EXECNAME = main ;
+
+UtilFlags $(NAMES) ;
+Objects $(NAMES:S=.cpp) ;
+
+UtilLibs $(EXECNAME) ;
+Executable $(EXECNAME) : $(NAMES:S=$(SUFOBJ)) $(UTIL_OBJECTS) ;

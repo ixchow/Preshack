@@ -4,6 +4,7 @@
 #define __STDC_CONSTANT_MACROS
 #include <stdint.h>
 extern "C" {
+#include <libavutil/imgutils.h>
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
@@ -18,65 +19,58 @@ using std::string;
 //most of this stuff is taken from
 // http://www.cse.msu.edu/~minutsil/linux/ffmpeg_decode.C
 //
-//(I've added the wrapper object so I can easilly use several at once.)
+//(I've added the wrapper object so I can easily use several at once.)
 //
 //Audio stuff based on ffplay.c
 //
 //Updated based on http://web.me.com/dhoerl/Home/Tech_Blog/Entries/2009/1/22_Revised_avcodec_sample.c.html
 
+//Updated again based on 'ffmpeg/doc/examples/demuxing_decoding.c' from the ffmpeg source
+
 class VidStream {
 public:
-	VidStream();
+	VidStream(std::string const &filename);
 	VidStream(VidStream const &other); //undefined for a reason.
 	~VidStream();
 	
-	bool open(string const &filename);
-	void close();
-
-	const unsigned char *get_video_pixels();
-	const unsigned char *get_audio_samples();
-
-	bool advance_audio();
-	bool advance_video();
-
-	//clears the respective packet queues:
-	void discard_audio();
-	void discard_video();
-
-	int w,h; //width and height of current video frame
-	int audio_len; //length of current audio frame
-
-	//audio is always 16-bit (in system order), methinks.
-	int audio_rate() const;
-	int audio_channels() const;
-
-	bool has_audio() const;
-	bool has_video() const;
-
-	double video_time() const;
-	double audio_time() const;
-
-private:
+	//move video forward, or return 'false' if at end of video.
 	bool advance();
 
-	//time at the start of the present audio/video frames:
-	double video_clock;
-	double audio_clock;
-	
-	AVFormatContext *fcx;
-	AVCodecContext *video_codec;
-	AVCodecContext *audio_codec;
-	
-	AVFrame *frame;
-	AVFrame *frameRGB;
-	uint8_t *frame_buffer;
+	double timestamp = 0.0;
+	uint32_t width = 0, height = 0; //width and height of current video frame
 
-	SwsContext *sws_context;
-	
-	unsigned int video_index; //index 'o video stream
-	unsigned int audio_index; //index 'o audio stream
+	bool done = false;
 
-	unsigned char audio_frame[AVCODEC_MAX_AUDIO_FRAME_SIZE];
+	//internals:
+
+	AVFrame *frame = NULL;
+	AVFormatContext *fcx = NULL;
+	AVCodecContext *video_ctx = NULL;
+	uint32_t video_index = -1U;
+
+	void decode(); //helper!
+
+	SwsContext *sws = NULL;
+	AVPixelFormat sws_format = AV_PIX_FMT_NONE;
+
+	uint8_t *rgb_data[4] = {NULL, NULL, NULL, NULL};
+	int rgb_linesizes[4] = {0, 0, 0, 0};
+
+	double video_timebase = 0.0;
+
+	
+	/*
+	AVFrame *frame = NULL;
+	AVFrame *frameRGB = NULL;
+	uint8_t *frame_buffer = NULL;
+	std::vector< uint8_t > video_pixels;
+
+	SwsContext *sws_context = NULL;
+	
+	unsigned int video_index = -1U; //index 'o video stream
+	unsigned int audio_index = -1U; //index 'o audio stream
+
+	std::vector< uint8_t > audio_samples;
 
 	deque< AVPacket * > video_queue;
 	deque< AVPacket * > audio_queue;
@@ -87,6 +81,7 @@ private:
 	bool is_open;
 	
 	static void avcodec_init();
+	*/
 };
 
 #endif

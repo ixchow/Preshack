@@ -38,7 +38,7 @@ REQUIRE_GL_EXTENSION( GL_ARB_texture_rectangle )
 REQUIRE_GL_EXTENSION( GL_ARB_texture_float )
 REQUEST_GL_EXTENSION( GL_ARB_color_buffer_float )
 REQUIRE_GL_EXTENSION( GL_ARB_shader_objects )
-//REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
+REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
 
 #include "gp_gl_helpers.hpp"
 
@@ -152,12 +152,12 @@ void IterModule::update(float elapsed_time) {
 		glUniform1fARB(glGetUniformLocationARB(iter_shader->handle, "w_x"), magic_x);
 		glUniform1fARB(glGetUniformLocationARB(iter_shader->handle, "w_center_minus_x_inv"), 1.0f / (middle-magic_x));
 
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, rhs_in().tex);
 		set_nearest();
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, guess_in().tex);
 		set_clamp_to_edge(); set_nearest();
@@ -174,11 +174,11 @@ void IterModule::update(float elapsed_time) {
 		glEnd();
 
 		glEnable(GL_BLEND);
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 

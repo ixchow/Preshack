@@ -31,7 +31,7 @@ REQUIRE_GL_EXTENSION( GL_ARB_texture_rectangle )
 REQUIRE_GL_EXTENSION( GL_ARB_texture_float )
 REQUEST_GL_EXTENSION( GL_ARB_color_buffer_float )
 REQUIRE_GL_EXTENSION( GL_ARB_shader_objects )
-//REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
+REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
 
 #include "gp_gl_helpers.hpp"
 
@@ -134,7 +134,7 @@ void TexViewerModule::draw(Box2f viewport, Box2f screen_viewport, float scale, u
 		glBegin(GL_QUADS);
 		glColor3f(0.0f, 0.0f, 0.0f);
 		glTexCoord2f(0-0.5f * px_size, 0-0.5f * px_size);
-		glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0+0.5f * px_size, 0+0.5f * px_size);
+		glMultiTexCoord2f(GL_TEXTURE1_ARB, 0+0.5f * px_size, 0+0.5f * px_size);
 		if (rotate) {
 			glVertex2f(-0.5f*s.x, -0.5f*s.y);
 		} else {
@@ -142,7 +142,7 @@ void TexViewerModule::draw(Box2f viewport, Box2f screen_viewport, float scale, u
 		}
 
 		glTexCoord2f(tex_out().width-0.5f * px_size, 0-0.5f * px_size);
-		glMultiTexCoord2fARB(GL_TEXTURE1_ARB, tex_out().width+0.5f * px_size, 0+0.5f * px_size);
+		glMultiTexCoord2f(GL_TEXTURE1_ARB, tex_out().width+0.5f * px_size, 0+0.5f * px_size);
 
 		if (rotate) {
 			glVertex2f(-0.5f*s.x,  0.5f*s.y);
@@ -151,7 +151,7 @@ void TexViewerModule::draw(Box2f viewport, Box2f screen_viewport, float scale, u
 		}
 
 		glTexCoord2f(tex_out().width-0.5f * px_size, tex_out().height-0.5f * px_size);
-		glMultiTexCoord2fARB(GL_TEXTURE1_ARB, tex_out().width+0.5f * px_size, tex_out().height+0.5f * px_size);
+		glMultiTexCoord2f(GL_TEXTURE1_ARB, tex_out().width+0.5f * px_size, tex_out().height+0.5f * px_size);
 
 		if (rotate) {
 			glVertex2f( 0.5f*s.x,  0.5f*s.y);
@@ -161,7 +161,7 @@ void TexViewerModule::draw(Box2f viewport, Box2f screen_viewport, float scale, u
 
 		glTexCoord2f(0-0.5f * px_size, tex_out().height-0.5f * px_size);
 
-		glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0+0.5f * px_size, tex_out().height+0.5f * px_size);
+		glMultiTexCoord2f(GL_TEXTURE1_ARB, 0+0.5f * px_size, tex_out().height+0.5f * px_size);
 
 		if (rotate) {
 			glVertex2f( 0.5f*s.x, -0.5f*s.y);

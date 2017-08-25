@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl -w
+#!perl -w
 
 #
 # Call latex to build an image from an input file.
@@ -10,6 +10,8 @@ if (@ARGV != 1) {
 	print STDERR "Please give me the name of an input file.\n";
 	exit;
 }
+
+#NOTE TO SELF: 'dvisvgm' is apparently a thing.
 
 
 $in = $ARGV[0];
@@ -48,6 +50,15 @@ EOF
 
 close LATEX;
 
+my $GS = "gs-noX11";
+for my $try ("gs-noX11","gs") {
+	$ret = system("which $try");
+	if ($ret == 0) {
+		$GS = $try;
+		last;
+	}
+}
+
 $ret = system("latex --interaction=nonstopmode texput.tex > /dev/null");
 if ($ret != 0) {
 	print STDERR "Latex-ing equation fails.\n";
@@ -56,15 +67,15 @@ if ($ret != 0) {
 	if ($ret != 0) {
 		print STDERR "dvips-ing equation fails.\n";
 	} else {
-		$ret = system("gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -dEPSCrop -sOutputFile=texput.pdf texput.ps > /dev/null 2> /dev/null");
+		$ret = system("$GS -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -dEPSCrop -sOutputFile=texput.pdf texput.ps > /dev/null 2> /dev/null");
 		if ($ret != 0) {
 			print STDERR "pdf-ing equation fails.\n";
 		} else {
-			$ret = system("gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pnggray -dGraphicsAlphaBits=4 -dTextAlphaBits=4 -r1000 -sOutputFile=texput.png texput.pdf > /dev/null 2> /dev/null");
+			$ret = system("$GS -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pnggray -dGraphicsAlphaBits=4 -dTextAlphaBits=4 -r1000 -sOutputFile=texput.png texput.pdf > /dev/null 2> /dev/null");
 			if ($ret != 0) {
 				print STDERR "png-ing equation fails.\n";
 			} else {
-				$ret = system("convert texput.png -depth 8 -level 10%,100% -background White -channel A -combine '$out' > /dev/null");
+				$ret = system("convert texput.png -depth 8 -level 100%,10% -background White -channel A -combine png:'$out' > /dev/null");
 				if ($ret != 0) {
 					print STDERR "convert-ing equation fails.\n";
 				}
@@ -72,6 +83,7 @@ if ($ret != 0) {
 		}
 	}
 }
+
 
 unlink("texput.dvi");
 unlink("texput.ps");

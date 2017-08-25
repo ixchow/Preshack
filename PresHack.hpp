@@ -9,7 +9,8 @@
 #include <Vector/Vector.hpp>
 #include <Graphics/Graphics.hpp>
 
-#include <vector>
+#include <deque>
+#include <list>
 #include <string>
 #include <map>
 using std::vector;
@@ -42,6 +43,11 @@ public:
 	Connection *point_con;
 };
 
+enum ScaleMode {
+	AbsoluteScale,
+	RelativeScale
+};
+
 class PresHack : public Mode {
 public:
 	PresHack();
@@ -50,8 +56,8 @@ public:
 	bool load(string const &filename);
 	void save(string const &filename);
 	void clear();
-	void copy(ostream &out);
-	void paste(istream &in);
+	void copy(ostream &out, ScaleMode scale_mode);
+	void paste(istream &in, ScaleMode scale_mode);
 
 	//store target, using relavance from 'rel' -- (backs up proper cameras.)
 	void store_snap(Snap &target, Snap const &rel = Snap());
@@ -103,6 +109,18 @@ public:
 	unsigned int source_port;
 
 	void get_close_seg(Vector2f const &pos, CloseSeg &close);
+
+	float loosen; //factor to shrink screen to avoid projector crop
+
+	struct Message {
+		float age = 0.0f;
+		Vector3f color = make_vector(1.0f, 1.0f, 1.0f);
+		std::string text;
+	};
+
+	void message(std::string const &text);
+
+	std::deque< Message > messages;
 };
 
 

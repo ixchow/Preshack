@@ -31,7 +31,7 @@ REQUIRE_GL_EXTENSION( GL_ARB_texture_rectangle )
 REQUIRE_GL_EXTENSION( GL_ARB_texture_float )
 REQUEST_GL_EXTENSION( GL_ARB_color_buffer_float )
 REQUIRE_GL_EXTENSION( GL_ARB_shader_objects )
-//REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
+REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
 
 #include "gp_gl_helpers.hpp"
 
@@ -125,12 +125,12 @@ void RHSModule::update(float elapsed_time) {
 
 		glUseProgramObjectARB(rhs_shader->handle);
 
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, gy_in().tex);
 		set_clamp_to_black(); set_nearest();
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, gx_in().tex);
 		set_clamp_to_black(); set_nearest();
@@ -147,11 +147,11 @@ void RHSModule::update(float elapsed_time) {
 		glEnd();
 
 		glEnable(GL_BLEND);
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 

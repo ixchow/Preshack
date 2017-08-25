@@ -12,6 +12,8 @@
 
 #include <vector>
 
+REQUIRE_GL_EXTENSION(GL_ARB_multitexture);
+
 #undef ERROR
 #define ERROR( X ) std::cerr << X << std::endl
 #define WARNING( X ) std::cout << X << std::endl
@@ -165,14 +167,9 @@ bool SimplePaintModule::handle_event(SDL_Event const &event, Vector2f local_mous
 		return false;
 	}
 
-	if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_WHEELUP) {
-		brush_size -= 1;
+	if (event.type == SDL_MOUSEWHEEL) {
+		brush_size += event.wheel.y;
 		if (brush_size < 0.5f) brush_size = 0.5f;
-		brush_fade = 1.0f;
-		return true;
-	}
-	if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_WHEELDOWN) {
-		brush_size += 1;
 		brush_fade = 1.0f;
 		return true;
 	}
@@ -298,19 +295,19 @@ void SimplePaintModule::draw(Box2f viewport, Box2f screen_viewport, float, unsig
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(0-0.5f*px_size,ImageHeight-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,0+0.5f*px_size,ImageHeight+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,0+0.5f*px_size,ImageHeight+0.5f*px_size);
 	glVertex2i(0,0);
 
 	glTexCoord2f(ImageWidth-0.5f*px_size,ImageHeight-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,ImageWidth+0.5f*px_size,ImageHeight+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,ImageWidth+0.5f*px_size,ImageHeight+0.5f*px_size);
 	glVertex2i(ImageWidth,0);
 
 	glTexCoord2f(ImageWidth-0.5f*px_size,0-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,ImageWidth+0.5f*px_size,0+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,ImageWidth+0.5f*px_size,0+0.5f*px_size);
 	glVertex2i(ImageWidth,ImageHeight);
 
 	glTexCoord2f(0-0.5f*px_size,0-0.5f*px_size);
-	glMultiTexCoord2fARB(GL_TEXTURE1_ARB,0+0.5f*px_size,0+0.5f*px_size);
+	glMultiTexCoord2f(GL_TEXTURE1_ARB,0+0.5f*px_size,0+0.5f*px_size);
 	glVertex2i(0,ImageHeight);
 
 	glEnd();

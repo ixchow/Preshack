@@ -31,7 +31,7 @@ REQUIRE_GL_EXTENSION( GL_ARB_texture_rectangle )
 REQUIRE_GL_EXTENSION( GL_ARB_texture_float )
 REQUEST_GL_EXTENSION( GL_ARB_color_buffer_float )
 REQUIRE_GL_EXTENSION( GL_ARB_shader_objects )
-//REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
+REQUIRE_GL_EXTENSION( GL_ARB_multitexture )
 
 #include "gp_gl_helpers.hpp"
 
@@ -124,12 +124,12 @@ void AddModule::update(float elapsed_time) {
 
 		glUseProgramObjectARB(interpolate_add_shader->handle);
 
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, guess_in().tex);
 		set_nearest();
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glEnable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, correction_in().tex);
 		set_clamp_to_edge(); set_nearest();
@@ -141,22 +141,22 @@ void AddModule::update(float elapsed_time) {
 		unsigned int w2 = guess_in().width;
 		unsigned int h2 = guess_in().height;
 		glColor3f(1.0f, 1.0f, 1.0f);
-		glMultiTexCoord2iARB(GL_TEXTURE1, 0, 0);
+		glMultiTexCoord2i(GL_TEXTURE1, 0, 0);
 		glTexCoord2i(0, 0); glVertex2f(-1.0f, -1.0f);
-		glMultiTexCoord2iARB(GL_TEXTURE1, w2, 0);
+		glMultiTexCoord2i(GL_TEXTURE1, w2, 0);
 		glTexCoord2i(w, 0); glVertex2f( 1.0f, -1.0f);
-		glMultiTexCoord2iARB(GL_TEXTURE1, w2, h2);
+		glMultiTexCoord2i(GL_TEXTURE1, w2, h2);
 		glTexCoord2i(w, h); glVertex2f( 1.0f,  1.0f);
-		glMultiTexCoord2iARB(GL_TEXTURE1, 0, h2);
+		glMultiTexCoord2i(GL_TEXTURE1, 0, h2);
 		glTexCoord2i(0, h); glVertex2f(-1.0f,  1.0f);
 		glEnd();
 
 		glEnable(GL_BLEND);
-		glActiveTextureARB(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE1);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
-		glActiveTextureARB(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glDisable(GL_TEXTURE_RECTANGLE_ARB);
 		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, 0);
 
