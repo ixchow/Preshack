@@ -139,7 +139,6 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	SDL_EnableUNICODE(1);
 	SDL_ShowCursor(SDL_DISABLE);
 
 	//Some quick basic GL state:

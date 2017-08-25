@@ -2,16 +2,23 @@ TOP = . ;
 GRAPHICS_USE_TEXTURE = 1 ;
 GRAPHICS_USE_SHADER = 1 ;
 GRAPHICS_USE_JPEG = 1 ;
-SubInclude TOP Basis ;
-SubInclude TOP Graphics ;
-#SubInclude TOP Character ;
-#SubInclude TOP Library ;
+SDL2 = 1 ;
+IS_GAME = 1 ;
+
+if $(OS) = MACOSX {
+} else {
+	GAME_LIBS = "../game-libs64/out" ;
+}
 
 SubDir TOP ;
 
+SubIncludeUtil ;
+
+MySubDir TOP ;
+
 NAMES = Frame hack Mode PresHack HQ String Item Image Equation Module DisplayModule SliderModule InputModule ColorModule XYGraphModule Animation ManyDGraphModule GraphModule
 #for video:
-	#VideoModule VidStream
+	VideoModule VidStream
 #for gt retreat talk:
 	#BallModule ArmModule AnglesModule CoordsModule CurveModule IKModule PhysicsModule ClockModule
 #for siggraph talk:
@@ -32,21 +39,30 @@ NAMES = Frame hack Mode PresHack HQ String Item Image Equation Module DisplayMod
 #for local layering talk;
 	LL_LayeringModule LL_Obj LL_ListGraph LL_Dialog LL_Regions LL_Code LL_Anim
 #for Poisson lab meeting
-	Poisson
+#	Poisson
 #for Soft Stacking in job talk:
-	SP_Paint
+#	SP_Paint
 #for BoLeRO talk:
-	BL_csv BL_lengths
+	#BL_csv BL_lengths
 #for real Soft Stacking:
-	SS_Canvas SS_coefs SS_Constraint
-	SS_optimizer SS_OptCanvas
-	SS_Volume
+#	SS_Canvas SS_coefs SS_Constraint
+#	SS_optimizer SS_OptCanvas
+#	SS_Volume
 #gaussian interpolation:
-	GI_StepModule
-	GI_Paint
-	PoissonTiming
+#	GI_StepModule
+#	GI_Paint
+#	PoissonTiming
+#retroreflective holograms
+	RH_Bead
 #for unbaked talk:
 	PhysicsAnimation
+#for behavioral animation talk:
+	BA_Core BA_Stage BA_Timeline BA_UI
+	BA_RandomBehavior
+	ImageGraph
+#knitting
+	K_KnitSim K_KnitControl
+	svd/svd
 	;
 
 Objects $(NAMES:S=.cpp) ;
@@ -59,25 +75,33 @@ if $(OS) = MACOSX {
 MKLPATH = $(MKLROOT)/lib/em64t ;
 MKLINCLUDE = $(MKLROOT)/include ;
 
-ObjectC++Flags $(NAMES) : $(SDLC++FLAGS) -DATI_HACK -I/opt/local/include -I$(MKLINCLUDE) -Wno-unused-function -std=c++0x ;
+ObjectC++Flags $(NAMES) : $(SDLC++FLAGS) -DATI_HACK -I/opt/local/include -I$(MKLINCLUDE) -Wno-unused-function ;
 
-GraphicsFlags $(NAMES) ;
+UtilFlags $(NAMES) ;
 
 ObjectC++Flags GradientStuff FFTPaintModule : -I../fftw-3.1.2/api ;
 
 FFMPEGC++FLAGS = ;
-FFMPEGLINKLIBS = -lavcodec -lavformat -lavfilter -lswscale -lavutil ;
+FFMPEGLINKLIBS = -lavcodec -lavformat -lswscale -lavutil ;
 
 ObjectC++Flags VidStream.cpp VideoModule.cpp : $(FFMPEGC++FLAGS) ;
 
 EXECNAME = hack ;
 
-LINKLIBS on dist/$(EXECNAME) += $(FFMPEGLINKLIBS) "`sdl-config --libs`" $(GRAPHICS_LIBS) -L$(MKLPATH) -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lmkl_lapack ; #-L../fftw-3.1.2/.libs -lfftw3f
+LINKLIBS on $(EXECNAME) += 
+	$(FFMPEGLINKLIBS)
+	-ljpeg
+	#"`sdl-config --libs`" $(GRAPHICS_LIBS)
+	#-L$(MKLPATH) -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -lmkl_lapack
+	#-L../fftw-3.1.2/.libs -lfftw3f
+;
+
+UtilLibs $(EXECNAME) ;
 
 if $(OS) = MACOSX {
-	LINKLIBS on dist/$(EXECNAME) += -framework OpenGL ; #-L../fftw-3.1.2/.libs -lfftw3f
+	LINKLIBS on $(EXECNAME) += -framework OpenGL ; #-L../fftw-3.1.2/.libs -lfftw3f
 } else {
-	LINKLIBS on dist/$(EXECNAME) += -liomp5 -lGL -lGLU -lpthread ;
+	LINKLIBS on $(EXECNAME) += -lGL -lGLU -lpthread ;
 }
 
 if $(OS) = NT {
@@ -85,6 +109,6 @@ if $(OS) = NT {
 	LinkResource dist/$(EXECNAME) : icons.res ;
 }
 
-File dist$(SEP)gentium.txf : Graphics$(SEP)fonts$(SEP)gentium.txf ; 
+File dist$(SEP)gentium.txf : util$(SEP)Graphics$(SEP)fonts$(SEP)gentium.txf ; 
 
-MainFromObjects dist/$(EXECNAME) : $(NAMES:S=$(SUFOBJ)) $(GRAPHICS_OBJECTS) $(LIBRARY_OBJECTS) $(CHARACTER_OBJECTS) Basis/Error.o Basis/ListDir.o ;
+Executable $(EXECNAME) : $(NAMES:S=$(SUFOBJ)) $(GRAPHICS_OBJECTS) $(LIBRARY_OBJECTS) $(CHARACTER_OBJECTS) $(BASIS_OBJECTS) ;
